@@ -135,21 +135,21 @@ export default function ResumePage() {
           </div>
         </section>
 
-        {/* Patents & Key Innovations */}
+        {/* 7 Patents & Key Innovations */}
         <section className="mb-6">
           <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 print:text-neutral-700 border-b border-neutral-200 dark:border-neutral-800 pb-1 mb-3">
-            Patents Filed & Startup Honors
+            7 Patents Filed & Startup Honors
           </h2>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {patentsAndRecognition.map((item) => (
-              <div key={item.id} className="text-xs sm:text-sm">
+              <div key={item.id} className="text-xs p-2.5 rounded-xl border border-neutral-200/80 dark:border-neutral-800 print:border-neutral-300">
                 <div>
                   <strong className="text-neutral-900 dark:text-white print:text-black">
                     {item.title}
                   </strong>{" "}
-                  — <span className="font-mono text-neutral-500 text-xs">({item.badge})</span>
+                  — <span className="font-mono text-neutral-500 text-[10px]">({item.badge})</span>
                 </div>
-                <p className="text-xs text-neutral-600 dark:text-neutral-400 print:text-neutral-700 leading-relaxed">
+                <p className="text-[11px] text-neutral-600 dark:text-neutral-400 print:text-neutral-700 mt-1 line-clamp-2">
                   {item.description}
                 </p>
               </div>

@@ -5,8 +5,7 @@ import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { PatentsSection } from "@/components/sections/PatentsSection";
-import { ResearchPreview } from "@/components/sections/ResearchPreview";
-import { BlogPreview } from "@/components/sections/BlogPreview";
+import { ResearchSection } from "@/components/sections/ResearchSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 
 export default function HomePage() {
@@ -17,9 +16,8 @@ export default function HomePage() {
       <ExperienceTimeline />
       <SkillsSection />
       <ProjectsSection />
+      <ResearchSection />
       <PatentsSection />
-      <ResearchPreview />
-      <BlogPreview />
       <ContactSection />
     </main>
   );

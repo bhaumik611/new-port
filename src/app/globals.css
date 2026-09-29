@@ -1,58 +1,58 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg-base: #f5f5f7;
-    --text-primary: #111111;
-    --text-secondary: #555555;
-    --text-muted: #888888;
-    --glass-bg: rgba(255, 255, 255, 0.65);
-    --glass-bg-hover: rgba(255, 255, 255, 0.85);
-    --glass-border: rgba(0, 0, 0, 0.08);
-    --glass-border-hover: rgba(0, 0, 0, 0.16);
-    --glass-inner-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-    --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
-    --spotlight-color: rgba(0, 0, 0, 0.06);
-    --card-surface: rgba(255, 255, 255, 0.7);
-    --pill-bg: rgba(255, 255, 255, 0.8);
-    --pill-border: rgba(0, 0, 0, 0.08);
-  }
+@custom-variant dark (&:where(.dark, .dark *));
 
-  .dark {
-    --bg-base: #000000;
-    --text-primary: #f5f5f7;
-    --text-secondary: #a1a1a6;
-    --text-muted: #6e6e73;
-    --glass-bg: rgba(20, 20, 22, 0.65);
-    --glass-bg-hover: rgba(30, 30, 34, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-border-hover: rgba(255, 255, 255, 0.22);
-    --glass-inner-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-    --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.05);
-    --spotlight-color: rgba(255, 255, 255, 0.08);
-    --card-surface: rgba(18, 18, 20, 0.6);
-    --pill-bg: rgba(15, 15, 18, 0.75);
-    --pill-border: rgba(255, 255, 255, 0.12);
-  }
+:root {
+  --bg-base: #f5f5f7;
+  --text-primary: #111111;
+  --text-secondary: #444444;
+  --text-muted: #777777;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-bg-hover: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-hover: rgba(0, 0, 0, 0.18);
+  --glass-inner-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06), 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  --spotlight-color: rgba(0, 0, 0, 0.05);
+  --card-surface: rgba(255, 255, 255, 0.85);
+  --pill-bg: rgba(255, 255, 255, 0.85);
+  --pill-border: rgba(0, 0, 0, 0.1);
+}
 
-  * {
-    box-sizing: border-box;
-  }
+.dark {
+  --bg-base: #000000;
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-muted: #6e6e73;
+  --glass-bg: rgba(18, 18, 20, 0.7);
+  --glass-bg-hover: rgba(28, 28, 32, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(255, 255, 255, 0.25);
+  --glass-inner-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+  --spotlight-color: rgba(255, 255, 255, 0.08);
+  --card-surface: rgba(18, 18, 20, 0.65);
+  --pill-bg: rgba(15, 15, 18, 0.8);
+  --pill-border: rgba(255, 255, 255, 0.14);
+}
 
-  html {
-    scroll-behavior: smooth;
-    color-scheme: light dark;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  body {
-    background-color: var(--bg-base);
-    color: var(--text-primary);
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    transition: background-color 0.4s ease, color 0.4s ease;
-  }
+html {
+  scroll-behavior: smooth;
+  color-scheme: light dark;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Luxury Glassmorphism Utilities */
@@ -76,7 +76,7 @@
   backdrop-filter: blur(24px) saturate(190%);
   -webkit-backdrop-filter: blur(24px) saturate(190%);
   border: 1px solid var(--pill-border);
-  box-shadow: var(--glass-inner-highlight), 0 8px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--glass-inner-highlight), 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 .hairline-border {

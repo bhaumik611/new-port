@@ -17,10 +17,11 @@ import {
   ArrowRight,
   Sparkles,
   Command,
+  Radio,
 } from "lucide-react";
 import { researchPapers } from "@/content/research-data";
-import { blogPosts } from "@/content/blog-data";
 import { projectsData } from "@/content/projects-data";
+import { patentsAndRecognition } from "@/content/experience-data";
 
 export function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,19 +73,23 @@ export function CommandPalette() {
     },
     {
       id: "nav-research",
-      title: "Research Simplified",
-      subtitle: "Browse all plain-language paper breakdowns",
+      title: "Publications & Research",
+      subtitle: "Browse Bhaumik's research papers & preprints",
       icon: BookOpen,
-      action: () => router.push("/research"),
+      action: () => {
+        router.push("/#research");
+      },
       category: "Research",
     },
     {
-      id: "nav-blog",
-      title: "Weekly Tech Blog",
-      subtitle: "Emerging tech, 6G, AI, and systems engineering",
-      icon: FileText,
-      action: () => router.push("/blog"),
-      category: "Blog",
+      id: "nav-patents",
+      title: "7 Patents Filed",
+      subtitle: "IoT, AgriTech, 6G Telecom, Healthcare AI patents",
+      icon: Radio,
+      action: () => {
+        router.push("/#patents");
+      },
+      category: "Patents",
     },
     {
       id: "nav-resume",
@@ -118,18 +123,22 @@ export function CommandPalette() {
     title: paper.shortTitle || paper.title,
     subtitle: `Paper: ${paper.plainSummary.slice(0, 65)}...`,
     icon: BookOpen,
-    action: () => router.push(`/research/${paper.slug}`),
-    category: "Research Papers",
+    action: () => {
+      router.push("/#research");
+    },
+    category: "Research",
   }));
 
-  // Blog items
-  const blogItems = blogPosts.map((post) => ({
-    id: `blog-${post.slug}`,
-    title: post.title,
-    subtitle: `Article: ${post.description.slice(0, 65)}...`,
-    icon: FileText,
-    action: () => router.push(`/blog/${post.slug}`),
-    category: "Blog Posts",
+  // Patent items
+  const patentItems = patentsAndRecognition.map((pat) => ({
+    id: `patent-${pat.id}`,
+    title: pat.title,
+    subtitle: `${pat.badge}: ${pat.description.slice(0, 65)}...`,
+    icon: Radio,
+    action: () => {
+      router.push("/#patents");
+    },
+    category: "Patents",
   }));
 
   // Project items
@@ -148,7 +157,7 @@ export function CommandPalette() {
     category: "Projects",
   }));
 
-  const allItems = [...baseItems, ...paperItems, ...blogItems, ...projectItems];
+  const allItems = [...baseItems, ...paperItems, ...patentItems, ...projectItems];
 
   const filteredItems = query.trim()
     ? allItems.filter(
@@ -205,7 +214,6 @@ export function CommandPalette() {
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-[99999] flex items-start justify-center pt-20 px-4 sm:px-6">
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -214,16 +222,14 @@ export function CommandPalette() {
               className="fixed inset-0 bg-black/60 backdrop-blur-md"
             />
 
-            {/* Modal Dialog */}
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: -10 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative w-full max-w-2xl glass-panel rounded-3xl overflow-hidden shadow-2xl border border-neutral-300/40 dark:border-neutral-700/50 bg-white/90 dark:bg-neutral-950/90 z-10"
+              className="relative w-full max-w-2xl glass-panel rounded-3xl overflow-hidden shadow-2xl border border-neutral-300/40 dark:border-neutral-700/50 bg-white/95 dark:bg-neutral-950/95 z-10"
               onKeyDown={handleKeyDownInMenu}
             >
-              {/* Search Bar Input */}
               <div className="flex items-center gap-3 px-5 py-4 border-b border-neutral-200/60 dark:border-neutral-800/60">
                 <Search className="w-5 h-5 text-neutral-400 shrink-0" />
                 <input
@@ -233,7 +239,7 @@ export function CommandPalette() {
                     setQuery(e.target.value);
                     setSelectedIndex(0);
                   }}
-                  placeholder="Type a command, paper title, project, or keyword..."
+                  placeholder="Search papers, 7 patents, projects, or commands..."
                   className="w-full bg-transparent text-sm sm:text-base text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 outline-none"
                 />
                 <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono rounded bg-neutral-200/70 dark:bg-neutral-800 text-neutral-500">
@@ -241,7 +247,6 @@ export function CommandPalette() {
                 </kbd>
               </div>
 
-              {/* Items List */}
               <div className="max-h-[360px] overflow-y-auto p-2 divide-y divide-transparent">
                 {filteredItems.length === 0 ? (
                   <div className="py-12 text-center text-sm text-neutral-500">
@@ -300,7 +305,6 @@ export function CommandPalette() {
                 )}
               </div>
 
-              {/* Footer info */}
               <div className="flex items-center justify-between px-5 py-3 border-t border-neutral-200/60 dark:border-neutral-800/60 text-[11px] text-neutral-500">
                 <div className="flex items-center gap-3">
                   <span>

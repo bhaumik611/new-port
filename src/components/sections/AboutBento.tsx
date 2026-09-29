@@ -125,7 +125,7 @@ export function AboutBento() {
           </div>
         </GlassCard>
 
-        {/* Tile 5: Stats Tile with Animated Counters */}
+        {/* Tile 5: Stats Tile with 7 Patents */}
         <GlassCard className="md:col-span-2 lg:col-span-2 p-6 sm:p-8">
           <div className="flex items-center justify-between mb-6">
             <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">
@@ -144,7 +144,7 @@ export function AboutBento() {
 
             <div className="space-y-1">
               <div className="text-3xl sm:text-4xl font-extrabold text-neutral-950 dark:text-neutral-50">
-                <StatCounter value={3} />
+                <StatCounter value={7} />
               </div>
               <div className="text-xs text-neutral-500 font-medium">Patents Filed</div>
             </div>
@@ -165,7 +165,7 @@ export function AboutBento() {
           </div>
         </GlassCard>
 
-        {/* Tile 6: Skills Continuous Marquee Banner (Full Width 4 cols) */}
+        {/* Tile 6: Skills Continuous Marquee Banner */}
         <div className="md:col-span-3 lg:col-span-4 overflow-hidden rounded-3xl glass-panel p-4 hairline-border">
           <div className="relative flex overflow-x-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
             <div className="animate-marquee flex items-center gap-3 whitespace-nowrap py-1">

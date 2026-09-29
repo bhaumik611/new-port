@@ -21,7 +21,7 @@ export function Footer() {
               <div className="w-8 h-8 rounded-full bg-black text-white dark:bg-white dark:text-black flex items-center justify-center font-bold text-sm">
                 BP
               </div>
-              <span className="text-lg font-bold tracking-tight">Bhaumik Patel</span>
+              <span className="text-lg font-bold tracking-tight text-neutral-950 dark:text-neutral-50">Bhaumik Patel</span>
             </div>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-md leading-relaxed">
               AI/ML Engineer, Researcher, and Founder. Exploring deep learning architectures, 6G communication systems, and patent engineering.
@@ -80,21 +80,18 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Research & Editorial */}
+          {/* Col 3: Research & IP */}
           <div className="space-y-3">
-            <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400">Hubs & CMS</h4>
+            <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400">Research & IP</h4>
             <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li>
-                <Link href="/research" className="hover:text-black dark:hover:text-white transition-colors">Research Simplified</Link>
+                <Link href="/#research" className="hover:text-black dark:hover:text-white transition-colors">Publications & Preprints</Link>
               </li>
               <li>
-                <Link href="/blog" className="hover:text-black dark:hover:text-white transition-colors">Weekly Tech Blog</Link>
+                <Link href="/#patents" className="hover:text-black dark:hover:text-white transition-colors">7 Patents Filed</Link>
               </li>
               <li>
-                <Link href="/rss.xml" className="hover:text-black dark:hover:text-white transition-colors">RSS Feed (/rss.xml)</Link>
-              </li>
-              <li>
-                <Link href="/keystatic" className="hover:text-black dark:hover:text-white transition-colors">Keystatic Visual CMS</Link>
+                <Link href="/#contact" className="hover:text-black dark:hover:text-white transition-colors">Collaboration & Contact</Link>
               </li>
             </ul>
           </div>

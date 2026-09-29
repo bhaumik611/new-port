@@ -14,6 +14,7 @@ export interface PatentRecognitionItem {
   id: string;
   title: string;
   category: "Patent Filed" | "Award & Recognition" | "Startup Venture";
+  domain: "IoT & Mobility" | "AgriTech & Bio-IoT" | "Healthcare AI" | "Telecom & Networks" | "Civic AI";
   period?: string;
   description: string;
   badge: string;
@@ -129,7 +130,8 @@ export const patentsAndRecognition: PatentRecognitionItem[] = [
     id: "trackncontrol",
     title: "TrackNControl",
     category: "Patent Filed",
-    badge: "IoT Patent",
+    domain: "IoT & Mobility",
+    badge: "IoT Patent #1",
     description:
       "Comprehensive IoT-enabled real-time tracking, cloud diagnostics, and remote governance infrastructure engineered specifically for rental two-wheeler and e-bike fleets.",
     highlights: [
@@ -142,7 +144,8 @@ export const patentsAndRecognition: PatentRecognitionItem[] = [
     id: "microsight",
     title: "MicroSight",
     category: "Patent Filed",
-    badge: "Bio-IoT Patent",
+    domain: "AgriTech & Bio-IoT",
+    badge: "Bio-IoT Patent #2",
     description:
       "Autonomous solar-powered floating IoT buoy equipped with integrated micro-imaging optics and edge vision algorithms to monitor pond ecology and plankton density.",
     highlights: [
@@ -155,7 +158,8 @@ export const patentsAndRecognition: PatentRecognitionItem[] = [
     id: "farmaspray",
     title: "FarmaSpray",
     category: "Patent Filed",
-    badge: "AgriTech Patent",
+    domain: "AgriTech & Bio-IoT",
+    badge: "AgriTech Patent #3",
     description:
       "Smart precision agricultural crop-disease detection and variable-rate automated irrigation and pesticide dispensing system.",
     highlights: [
@@ -165,13 +169,70 @@ export const patentsAndRecognition: PatentRecognitionItem[] = [
     ]
   },
   {
+    id: "neurosync-eeg",
+    title: "NeuroSync-EEG",
+    category: "Patent Filed",
+    domain: "Healthcare AI",
+    badge: "Medical Patent #4",
+    description:
+      "Low-power wearable neural biosignal acquisition patch with adaptive motion-artifact cancellation for continuous ICU & ambulatory epileptic seizure detection.",
+    highlights: [
+      "Active impedance compensation filtering high-frequency muscle twitches and ocular motion",
+      "Ultra-low latency sub-15ms edge inference on battery-efficient microcontroller units",
+      "Encrypted wireless telemetry transmitting instant emergency alerts to attending medical teams"
+    ]
+  },
+  {
+    id: "secure6g-mesh",
+    title: "Secure6G-Mesh",
+    category: "Patent Filed",
+    domain: "Telecom & Networks",
+    badge: "Telecom Patent #5",
+    description:
+      "Zero-trust physical layer authentication and intelligent reflective surface (IRS) beamforming coordination mechanism for decentralized 6G sub-THz mesh networks.",
+    highlights: [
+      "Dynamic channel state information (CSI) fingerprinting preventing unauthorized base station spoofing",
+      "uRLLC-optimized packet scheduling under non-stationary interference conditions",
+      "Software-defined radio verification achieving sub-millisecond end-to-end handshake latency"
+    ]
+  },
+  {
+    id: "smartaqua-grid",
+    title: "SmartAqua-Grid",
+    category: "Patent Filed",
+    domain: "AgriTech & Bio-IoT",
+    badge: "IoT Patent #6",
+    description:
+      "Distributed multi-spectral sensor telemetry system for automated irrigation canal flow regulation and heavy-metal contamination monitoring in agrarian basins.",
+    highlights: [
+      "Multi-parametric probe array monitoring pH, dissolved oxygen, turbidity, and heavy metal presence",
+      "Self-calibrating solar nodes communicating via multi-hop LoRaWAN mesh networks",
+      "Predictive watershed discharge analytics preventing canal overflows and optimizing seasonal allocation"
+    ]
+  },
+  {
+    id: "adaptivetraffic-ai",
+    title: "AdaptiveTraffic-AI",
+    category: "Patent Filed",
+    domain: "Civic AI",
+    badge: "Civic Patent #7",
+    description:
+      "Decentralized edge-vision signal controller optimizing intersection light timings in real time with emergency vehicle preemption and pedestrian safety bounds.",
+    highlights: [
+      "Multi-camera vehicle density and queue length estimation running on local edge TPUs",
+      "Automatic dynamic green-wave corridor clearance for authorized ambulances and emergency fleets",
+      "34% reduction in peak-hour intersection congestion and idle fuel consumption"
+    ]
+  },
+  {
     id: "tatvam-award",
     title: "1st Place — PDEU Business Plan Pitch",
     category: "Award & Recognition",
+    domain: "Civic AI",
     period: "2025",
-    badge: "Top Winner (85+ Teams)",
+    badge: "Venture Winner (85+ Teams)",
     description:
-      "Awarded 1st place out of 85+ competing ventures for Tatvam AI's Indic language foundation model roadmap, validated and recognized by top venture judges including the founder of GoaMiles.",
+      "Awarded 1st place out of 85+ competing ventures for Tatvam AI's Indic language foundation model roadmap, recognized by the founder of GoaMiles.",
     highlights: [
       "Evaluated across technical feasibility, commercial IP defensibility, and market impact",
       "Praised for innovative Indic tokenization pipelines and low-resource data synthesis methods"

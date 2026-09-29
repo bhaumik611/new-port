@@ -27,8 +27,8 @@ export function Navbar() {
     { label: "About", href: "/#about" },
     { label: "Experience", href: "/#experience" },
     { label: "Projects", href: "/#projects" },
-    { label: "Research", href: "/research" },
-    { label: "Blog", href: "/blog" },
+    { label: "Research", href: "/#research" },
+    { label: "Patents", href: "/#patents" },
     { label: "Contact", href: "/#contact" },
   ];
 
@@ -66,31 +66,12 @@ export function Navbar() {
           )}
         >
           {navLinks.map((link) => {
-            const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : link.href.startsWith("/#")
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
-
             return (
               <Link
                 key={link.label}
                 href={link.href}
-                className={cn(
-                  "relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200",
-                  isActive
-                    ? "text-black dark:text-white"
-                    : "text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50"
-                )}
+                className="relative px-3.5 py-1.5 rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 transition-all duration-200"
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="active-pill"
-                    className="absolute inset-0 rounded-full bg-neutral-200/80 dark:bg-neutral-800/80 -z-10 shadow-sm"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
                 {link.label}
               </Link>
             );
