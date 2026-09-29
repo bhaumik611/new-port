@@ -153,3 +153,4 @@ You can use the following rich media components anywhere in your articles and pa
 - [x] **Patents**: TrackNControl, MicroSight, FarmaSpray, Tatvam AI.
 - [x] **Privacy**: No phone number displayed publicly; email copy button + direct mailto.
 - [x] **Lighthouse Ready**: Static Site Generation (`generateStaticParams`) across all 25 routes, optimized fonts, and minimal payload.
+# new-port
