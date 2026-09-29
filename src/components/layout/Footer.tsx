@@ -24,7 +24,7 @@ export function Footer() {
               <span className="text-lg font-bold tracking-tight text-neutral-950 dark:text-neutral-50">Bhaumik Patel</span>
             </div>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-md leading-relaxed">
-              AI/ML Engineer, Researcher, and Founder. Exploring deep learning architectures, 6G communication systems, and patent engineering.
+              AI/ML Engineer, Researcher, and Founder. Exploring deep learning architectures, multimodal intelligence, and patent engineering.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <MagneticButton

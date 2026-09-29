@@ -3,18 +3,15 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ShieldCheck,
   Radio,
   Leaf,
   Sparkles,
   Check,
   ChevronLeft,
   ChevronRight,
-  Layers,
-  Award,
   Activity,
   Cpu,
-  Eye,
+  Award,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { TextReveal } from "@/components/ui/TextReveal";
@@ -31,7 +28,7 @@ const domainIcons: Record<string, any> = {
 export function PatentsSection() {
   const [selectedDomain, setSelectedDomain] = useState<string>("All");
   const [activePatentIndex, setActivePatentIndex] = useState<number>(0);
-  const [viewMode, setViewMode] = useState<"deck" | "grid">("deck");
+  const [viewMode, setViewMode] = useState<"showcase" | "grid">("showcase");
 
   const domains = [
     "All",
@@ -60,7 +57,7 @@ export function PatentsSection() {
   return (
     <section id="patents" className="py-24 px-4 sm:px-6 max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-neutral-500">
             <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-white" />
@@ -71,18 +68,18 @@ export function PatentsSection() {
           </TextReveal>
         </div>
 
-        {/* View mode toggle (Interactive Deck vs Compact Grid) */}
+        {/* View mode toggle (Showcase vs Grid) */}
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setViewMode("deck")}
+            onClick={() => setViewMode("showcase")}
             className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${
-              viewMode === "deck"
+              viewMode === "showcase"
                 ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
-                : "glass-pill text-neutral-600 dark:text-neutral-400"
+                : "glass-pill text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white"
             }`}
           >
-            Interactive Deck
+            Interactive Showcase
           </button>
           <button
             type="button"
@@ -90,16 +87,16 @@ export function PatentsSection() {
             className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${
               viewMode === "grid"
                 ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
-                : "glass-pill text-neutral-600 dark:text-neutral-400"
+                : "glass-pill text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white"
             }`}
           >
-            Compact Grid
+            All 7 Grid
           </button>
         </div>
       </div>
 
       {/* Domain Filter Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
         {domains.map((domain) => (
           <button
             key={domain}
@@ -119,140 +116,129 @@ export function PatentsSection() {
         ))}
       </div>
 
-      {viewMode === "deck" ? (
-        /* Interactive Deck Mode: Showcase patent with quick selector tabs */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Column: Quick Patent Index List (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-2.5 max-h-[480px] overflow-y-auto pr-1">
+      {viewMode === "showcase" ? (
+        /* Showcase Mode without any internal scroll trapping */
+        <div className="space-y-6">
+          {/* Quick Horizontal Selector Bar */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
             {filteredItems.map((item, idx) => {
               const isSelected = idx === activePatentIndex;
               const Icon = domainIcons[item.domain] || Sparkles;
 
               return (
-                <div
+                <button
                   key={item.id}
+                  type="button"
                   onClick={() => setActivePatentIndex(idx)}
-                  className={`p-3.5 rounded-2xl cursor-pointer transition-all border ${
+                  className={`p-2.5 rounded-2xl text-left transition-all border ${
                     isSelected
-                      ? "bg-white dark:bg-neutral-900 border-neutral-400 dark:border-neutral-600 shadow-md scale-[1.01]"
-                      : "glass-panel border-neutral-200/50 dark:border-neutral-800/50 text-neutral-600 dark:text-neutral-400 hover:bg-white/80 dark:hover:bg-neutral-900/80"
+                      ? "bg-white dark:bg-neutral-900 border-neutral-500 dark:border-neutral-500 shadow-md scale-[1.02]"
+                      : "glass-pill border-neutral-200/60 dark:border-neutral-800/60 text-neutral-600 dark:text-neutral-400 hover:bg-white/80 dark:hover:bg-neutral-900/80"
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <div
-                        className={`p-1.5 rounded-xl shrink-0 ${
-                          isSelected
-                            ? "bg-black text-white dark:bg-white dark:text-black"
-                            : "bg-neutral-200/60 dark:bg-neutral-800"
-                        }`}
-                      >
-                        <Icon className="w-3.5 h-3.5" />
-                      </div>
-                      <div className="truncate">
-                        <div className="text-sm font-bold text-neutral-950 dark:text-neutral-50 truncate">
-                          {item.title}
-                        </div>
-                        <div className="text-[11px] font-mono text-neutral-500 truncate">
-                          {item.domain}
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded glass-pill shrink-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[10px] font-mono text-neutral-400 uppercase truncate">
                       {item.badge}
                     </span>
                   </div>
-                </div>
+                  <div className="text-xs font-bold text-neutral-950 dark:text-neutral-50 truncate">
+                    {item.title}
+                  </div>
+                </button>
               );
             })}
           </div>
 
-          {/* Right Column: Detailed Active Patent Card (7 cols) */}
-          <div className="lg:col-span-7">
-            <AnimatePresence mode="wait">
-              {currentItem && (
-                <motion.div
-                  key={currentItem.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                >
-                  <GlassCard className="p-7 sm:p-9 min-h-[480px] flex flex-col justify-between">
-                    <div>
-                      {/* Header row */}
-                      <div className="flex items-center justify-between mb-5">
-                        <div className="flex items-center gap-2.5">
-                          <div className="p-2 rounded-xl bg-black text-white dark:bg-white dark:text-black">
-                            <CurrentIcon className="w-4 h-4" />
-                          </div>
-                          <span className="text-xs font-mono uppercase tracking-wider text-neutral-500">
-                            {currentItem.domain}
-                          </span>
+          {/* Active Patent Hero Glass Display */}
+          <AnimatePresence mode="wait">
+            {currentItem && (
+              <motion.div
+                key={currentItem.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+              >
+                <GlassCard className="p-7 sm:p-10 flex flex-col justify-between">
+                  <div>
+                    {/* Header meta */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-2 rounded-xl bg-black text-white dark:bg-white dark:text-black">
+                          <CurrentIcon className="w-4 h-4" />
                         </div>
+                        <span className="text-xs font-mono uppercase tracking-wider text-neutral-500">
+                          {currentItem.domain}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2">
                         <span className="px-3 py-1 rounded-full text-xs font-mono bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 font-semibold">
                           {currentItem.badge}
                         </span>
                       </div>
+                    </div>
 
-                      <h3 className="text-2xl font-black tracking-tight text-neutral-950 dark:text-neutral-50 mb-3">
-                        {currentItem.title}
-                      </h3>
+                    <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-neutral-950 dark:text-neutral-50 mb-3">
+                      {currentItem.title}
+                    </h3>
 
-                      <p className="text-sm sm:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed font-normal">
-                        {currentItem.description}
-                      </p>
+                    <p className="text-sm sm:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed font-normal">
+                      {currentItem.description}
+                    </p>
 
-                      {/* Highlights */}
-                      <div className="mt-6 space-y-2.5">
-                        <div className="text-xs font-mono uppercase text-neutral-400">
-                          Key Technical Claims & Features
-                        </div>
+                    {/* Claims highlights */}
+                    <div className="mt-6 space-y-2.5">
+                      <div className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+                        Key Technical Architecture & Claims
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
                         {currentItem.highlights.map((h, hIdx) => (
                           <div
                             key={hIdx}
-                            className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed"
+                            className="p-3.5 rounded-2xl bg-neutral-100/70 dark:bg-neutral-900/70 border border-neutral-200/60 dark:border-neutral-800/60 text-xs sm:text-sm text-neutral-800 dark:text-neutral-200 leading-relaxed flex items-start gap-2.5"
                           >
-                            <Check className="w-4 h-4 text-neutral-400 shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-neutral-500 shrink-0 mt-0.5" />
                             <span>{h}</span>
                           </div>
                         ))}
                       </div>
                     </div>
+                  </div>
 
-                    {/* Footer Nav Controls */}
-                    <div className="mt-8 pt-5 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between text-xs font-mono">
-                      <span className="text-neutral-400">
-                        Patent {activePatentIndex + 1} of {filteredItems.length}
-                      </span>
+                  {/* Navigation Footer */}
+                  <div className="mt-8 pt-5 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between text-xs font-mono">
+                    <span className="text-neutral-400">
+                      Patent {activePatentIndex + 1} of {filteredItems.length} (Status: In Prosecution / Filed)
+                    </span>
 
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={handlePrev}
-                          className="p-2 rounded-full glass-pill hover:scale-105 transition-transform"
-                          aria-label="Previous patent"
-                        >
-                          <ChevronLeft className="w-4 h-4 text-neutral-700 dark:text-neutral-300" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleNext}
-                          className="p-2 rounded-full glass-pill hover:scale-105 transition-transform"
-                          aria-label="Next patent"
-                        >
-                          <ChevronRight className="w-4 h-4 text-neutral-700 dark:text-neutral-300" />
-                        </button>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={handlePrev}
+                        className="p-2.5 rounded-full glass-pill hover:scale-105 transition-transform"
+                        aria-label="Previous patent"
+                      >
+                        <ChevronLeft className="w-4 h-4 text-neutral-800 dark:text-neutral-200" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNext}
+                        className="p-2.5 rounded-full glass-pill hover:scale-105 transition-transform"
+                        aria-label="Next patent"
+                      >
+                        <ChevronRight className="w-4 h-4 text-neutral-800 dark:text-neutral-200" />
+                      </button>
                     </div>
-                  </GlassCard>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       ) : (
-        /* Compact Grid View for fast scanning */
+        /* 7-Card Grid View: Pure page scroll */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item) => {
             const Icon = domainIcons[item.domain] || Sparkles;

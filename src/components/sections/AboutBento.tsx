@@ -37,14 +37,14 @@ export function AboutBento() {
               Building at the intersection of AI theory and physical systems.
             </h3>
             <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
-              I am an AI/ML engineer and researcher specializing in deep learning, biosignal analysis, and 6G communication networks. My work spans foundational algorithm research, patent engineering at i-Hub Gujarat, and building scalable LLM infrastructure.
+              I am an AI/ML engineer and researcher specializing in deep learning architectures, multimodal intelligence, and edge systems. My work spans foundational algorithm research, patent engineering at i-Hub Gujarat, and building scalable LLM infrastructure.
             </p>
           </div>
 
           <div className="mt-6 pt-4 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center gap-4 text-xs font-mono text-neutral-500">
             <span>Core: Machine Learning</span>
             <span>•</span>
-            <span>Focus: Systems & Networks</span>
+            <span>Focus: Systems & AI Architecture</span>
           </div>
         </GlassCard>
 
@@ -106,12 +106,12 @@ export function AboutBento() {
               <Compass className="w-4 h-4 text-neutral-400" />
             </div>
             <h4 className="text-lg font-bold tracking-tight text-neutral-950 dark:text-neutral-50 mb-2">
-              Next-Gen Networking & Model Optimization
+              Deep Learning & High-Performance AI Systems
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-black dark:bg-white" />
-                <span>6G physical layer security & uRLLC low-latency packet scheduling at IIT Gandhinagar</span>
+                <span>Uncertainty-aware LLM meta-routing and cost-optimized RAG pipelines</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-black dark:bg-white" />
@@ -119,7 +119,7 @@ export function AboutBento() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-black dark:bg-white" />
-                <span>Uncertainty-aware LLM meta-routing and cost-optimized RAG architectures</span>
+                <span>High-speed networked intelligence & protocol performance optimization at IIT Gandhinagar</span>
               </li>
             </ul>
           </div>

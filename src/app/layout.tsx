@@ -27,15 +27,13 @@ export const metadata: Metadata = {
     template: "%s | Bhaumik Patel",
   },
   description:
-    "Personal portfolio & research hub of Bhaumik Patel. Exploring deep learning architectures, 6G telecom systems, and patent engineering.",
+    "Personal portfolio of Bhaumik Patel. AI/ML engineer, researcher, and patent innovator building high-performance deep learning systems.",
   keywords: [
     "Bhaumik Patel",
     "AI Engineer",
     "Machine Learning",
-    "6G Telecom",
     "Deep Learning",
     "Patents",
-    "Research Simplified",
     "TrustRAG",
     "Tatvam AI",
     "IIT Gandhinagar",
@@ -50,14 +48,14 @@ export const metadata: Metadata = {
     url: "https://bhaumikpatel.dev",
     title: "Bhaumik Patel — AI/ML Engineer, Researcher & Founder",
     description:
-      "Personal portfolio & research hub of Bhaumik Patel. Deep learning architectures, 6G systems, and patent engineering.",
+      "Personal portfolio of Bhaumik Patel. AI/ML engineer, researcher, and patent innovator building high-performance deep learning systems.",
     siteName: "Bhaumik Patel Portfolio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Bhaumik Patel — AI/ML Engineer, Researcher & Founder",
     description:
-      "Personal portfolio & research hub of Bhaumik Patel. Deep learning architectures, 6G systems, and patent engineering.",
+      "Personal portfolio of Bhaumik Patel. AI/ML engineer, researcher, and patent innovator building high-performance deep learning systems.",
   },
   robots: {
     index: true,
@@ -88,9 +86,9 @@ export default function RootLayout({
       "Artificial Intelligence",
       "Machine Learning",
       "Deep Learning",
-      "6G Wireless Networks",
       "Patent Engineering",
       "Natural Language Processing",
+      "Edge Computing",
     ],
   };
 

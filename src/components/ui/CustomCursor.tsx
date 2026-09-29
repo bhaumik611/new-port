@@ -12,8 +12,8 @@ export function CustomCursor() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Smooth springs for trailing ring
-  const springConfig = { damping: 28, stiffness: 350, mass: 0.5 };
+  // High-performance silky spring physics
+  const springConfig = { damping: 26, stiffness: 400, mass: 0.35 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
@@ -50,12 +50,12 @@ export function CustomCursor() {
       setIsHovered(!!interactive);
     };
 
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("mousedown", onMouseDown, { passive: true });
+    window.addEventListener("mouseup", onMouseUp, { passive: true });
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mouseenter", onMouseEnter);
-    document.addEventListener("mouseover", handleElementHover);
+    document.addEventListener("mouseover", handleElementHover, { passive: true });
 
     return () => {
       document.body.classList.remove("custom-cursor-active");
@@ -72,26 +72,10 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Primary center dot */}
+      {/* Ultra-modern Inverted Fluid Cursor Lens */}
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[9999] rounded-full bg-black dark:bg-white"
-        style={{
-          x: mouseX,
-          y: mouseY,
-          translateX: "-50%",
-          translateY: "-50%",
-          width: isHovered ? 6 : 7,
-          height: isHovered ? 6 : 7,
-          opacity: isVisible ? 1 : 0,
-        }}
-        transition={{ duration: 0.15 }}
-      />
-
-      {/* Trailing follower ring */}
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border border-black/35 dark:border-white/40"
+        className="pointer-events-none fixed top-0 left-0 z-[99999] rounded-full mix-blend-difference bg-white"
         style={{
           x: smoothX,
           y: smoothY,
@@ -100,17 +84,38 @@ export function CustomCursor() {
           opacity: isVisible ? 1 : 0,
         }}
         animate={{
-          width: isHovered ? 48 : isClicking ? 24 : 32,
-          height: isHovered ? 48 : isClicking ? 24 : 32,
-          backgroundColor: isHovered
-            ? "rgba(128, 128, 128, 0.08)"
-            : "rgba(128, 128, 128, 0.0)",
-          borderColor: isHovered
-            ? "rgba(128, 128, 128, 0.6)"
-            : "rgba(128, 128, 128, 0.3)",
-          scale: isClicking ? 0.9 : 1,
+          width: isHovered ? 52 : isClicking ? 14 : 10,
+          height: isHovered ? 52 : isClicking ? 14 : 10,
+          scale: isClicking ? 0.85 : 1,
         }}
-        transition={{ type: "spring", damping: 25, stiffness: 300, mass: 0.4 }}
+        transition={{
+          type: "spring",
+          damping: 24,
+          stiffness: 380,
+          mass: 0.35,
+        }}
+      />
+
+      {/* Subtle Ambient Glow Aura on Hover */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none fixed top-0 left-0 z-[99998] rounded-full blur-[8px] bg-neutral-500/20 dark:bg-white/20"
+        style={{
+          x: smoothX,
+          y: smoothY,
+          translateX: "-50%",
+          translateY: "-50%",
+          opacity: isVisible && isHovered ? 1 : 0,
+        }}
+        animate={{
+          width: isHovered ? 70 : 0,
+          height: isHovered ? 70 : 0,
+        }}
+        transition={{
+          type: "spring",
+          damping: 28,
+          stiffness: 300,
+        }}
       />
     </>
   );

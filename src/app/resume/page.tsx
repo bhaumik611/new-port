@@ -48,7 +48,7 @@ export default function ResumePage() {
                 Bhaumik Patel
               </h1>
               <p className="text-sm font-mono text-neutral-600 dark:text-neutral-400 print:text-neutral-700 mt-1">
-                AI/ML Engineer • Telecom & 6G Systems Researcher • Founder
+                AI/ML Engineer • Deep Learning Systems Researcher • Founder
               </p>
             </div>
 

@@ -7,10 +7,10 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 
 const roles = [
   "AI/ML Engineer",
-  "Telecom & 6G Researcher",
+  "Deep Learning Researcher",
   "Startup Founder",
   "Patent Innovator",
-  "Systems Builder",
+  "Systems Architect",
 ];
 
 export function HeroSection() {
@@ -36,7 +36,7 @@ export function HeroSection() {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neutral-400 opacity-75" />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-neutral-900 dark:bg-white" />
         </span>
-        <span>Open to Research & Engineering Opportunities</span>
+        <span>Open to Research & AI Engineering Opportunities</span>
       </motion.div>
 
       {/* Main Display Heading */}
@@ -74,7 +74,7 @@ export function HeroSection() {
         transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
         className="mt-4 max-w-2xl text-sm sm:text-base md:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal"
       >
-        Bridging theoretical machine learning research, 6G telecom systems, and production software architectures with patent-backed innovation.
+        Bridging deep learning research, intelligent systems architectures, and production-grade software with patent-backed innovation.
       </motion.p>
 
       {/* Action CTA Buttons */}
