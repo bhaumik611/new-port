@@ -3,7 +3,7 @@ export interface BlogPost {
   title: string;
   description: string;
   date: string;
-  category: "AI" | "Networks/6G" | "Security" | "Startups" | "Research" | "Tools";
+  category: "AI Engineering" | "LLM Architecture" | "Edge Systems" | "Startups & IP";
   tags: string[];
   readTime: string;
   featured?: boolean;
@@ -12,73 +12,27 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: "welcome-what-ill-be-writing-about",
-    title: "Welcome — What I'll Be Writing About",
+    slug: "engineering-trustworthy-rag-pipelines",
+    title: "Engineering Trustworthy RAG: Beyond Vector Distance & Cosine Similarity",
     description:
-      "A personal manifesto on engineering at the bleeding edge: bridging machine learning research, 6G telecom architectures, startup mechanics, and patent engineering.",
-    date: "2026-04-01",
-    category: "Research",
-    tags: ["Philosophy", "AI Engineering", "6G Systems", "Patents", "Writing"],
-    readTime: "4 min read",
+      "Why naive dense vector search causes hallucinations in production, and how combining Reciprocal Rank Fusion (BM25 + FAISS) with Context Entailment Scoring solves enterprise accuracy bottlenecks.",
+    date: "2026-04-05",
+    category: "AI Engineering",
+    tags: ["RAG", "FAISS", "BM25", "Hallucination Scoring", "Production AI"],
+    readTime: "6 min read",
     featured: true,
     content: `
-# Engineering at the Bleeding Edge
+# The Reality of Production RAG
 
-Welcome to my digital workshop and research notebook. 
+Most developers build Retrieval-Augmented Generation (RAG) by embedding documents with a dense model and querying an approximate nearest neighbors (ANN) index. In real production workloads, this approach fails on:
 
-For the past few years, my work has hovered at the intersection of **deep learning theory**, **distributed systems**, and **hardware-conscious deployment**. Whether it's dissecting attention mechanisms for biological signals, engineering ultra-low-latency 5G/6G communication protocols at IIT Gandhinagar, or filing patents at i-Hub Gujarat, one truth remains clear:
-
-> **The most interesting breakthroughs happen at the friction points between disciplines.**
-
-## What You Can Expect Every Week
-
-This publication is dedicated to demystifying emerging technologies without fluff. Here is what I will be sharing regularly:
-
-### 1. Research Simplified & First-Principles Breakdowns
-Academic papers are often written in opaque academic jargon. I will take landmark papers in LLM routing, biosignal analysis, and distributed neural systems and explain both the rigorous mathematical intuition and the plain-English takeaway.
-
-### 2. Next-Gen Networking & 6G Systems
-As telecom moves beyond 5G toward sub-terahertz frequencies, intelligent reflective surfaces, and AI-native radio access networks (RAN), cybersecurity and protocol optimization become paramount. I'll share real experiments, packet benchmarks, and system designs.
-
-### 3. Practical AI/ML Architecture
-Deep dives into trust-aware RAG, LoRA fine-tuning, quantization bottlenecks (INT4 vs FP8), and multi-agent routing. Code snippets, benchmarks, and honest post-mortems on what failed in production.
-
-### 4. Patents, Startups & Intellectual Property
-How to translate an engineering insight into a defensible patent claim, lessons from building Tatvam AI and competing with 85+ teams, and navigating early-stage IP strategy.
-
----
-
-## Join the Conversation
-
-Everything here is open-source and built for discussion. If you have questions, feedback, or want to collaborate on research, reach out via the contact page or connect on [GitHub](https://github.com/bhaumik611) and [LinkedIn](https://www.linkedin.com/in/bhaumik-patel-bbb79635b/).
-    `
-  },
-  {
-    slug: "building-trustrag-hybrid-retrieval-hallucination-scoring",
-    title: "Building TrustRAG: Hybrid Retrieval & Real-Time Hallucination Scoring",
-    description:
-      "Why naive vector RAG fails in production, how combining FAISS with BM25 changes the retrieval landscape, and implementing confidence-gated model failover.",
-    date: "2026-03-22",
-    category: "AI",
-    tags: ["RAG", "FAISS", "BM25", "FastAPI", "Evaluation", "Production ML"],
-    readTime: "7 min read",
-    featured: false,
-    content: `
-# Why Naive Vector Search Fails
-
-Most developers build RAG by chunking text, computing dense embeddings, and querying a vector index like FAISS or Pinecone with cosine similarity. In production, this breaks down when queries involve:
-
-1. **Exact keywords and acronyms** (e.g., "Section 4(a)(1) clause C" or specific serial numbers).
-2. **Out-of-vocabulary domain tokens**.
-3. **Subtle negative constraints** ("Find papers that do NOT use transformer decoders").
+1. **Exact token lookups**: Product codes, API method names, and legal clauses.
+2. **Out-of-vocabulary terms**: Medical identifiers or proprietary acronyms.
+3. **Negative constraints**: Queries like "Find models that do not use cross-entropy loss".
 
 ## The Hybrid Retrieval Architecture
 
-In **TrustRAG**, we solve this by executing parallel retrieval:
-
-- **Dense Pathway**: FAISS indexing with \`sentence-transformers/all-MiniLM-L6-v2\` capturing semantic intent.
-- **Sparse Pathway**: Exact token frequency matching using BM25 with custom stemming and stopword filtering.
-- **Reciprocal Rank Fusion (RRF)**: Merging both ranking distributions into a unified, balanced candidate list.
+To overcome this, **hybrid retrieval** merges dense semantic search with sparse BM25 exact matching using **Reciprocal Rank Fusion (RRF)**.
 
 \`\`\`python
 def reciprocal_rank_fusion(dense_ranks, sparse_ranks, k=60):
@@ -92,31 +46,74 @@ def reciprocal_rank_fusion(dense_ranks, sparse_ranks, k=60):
 
 ## Hallucination Risk Classification
 
-Before returning an answer to the user, TrustRAG computes a **Context Entailment Score (CES)**. If the confidence drops below the threshold, it triggers an adaptive fallback from Groq (Llama-3-70B) to ZhipuAI / GLM-4, ensuring high reliability.
+Before returning generation output, the system evaluates the **Context Entailment Score (CES)**. If attribution confidence drops below threshold, an automated fallback route switches inference to a larger reasoning backend.
     `
   },
   {
-    slug: "towards-6g-cybersecurity-and-sub-terahertz-networks",
-    title: "Towards 6G: Cybersecurity, Semantic Communication & Sub-THz Protocols",
+    slug: "cost-effective-llm-routing-in-practice",
+    title: "Cost-Effective Multi-Model LLM Routing in Production",
     description:
-      "A technical walkthrough of emerging 6G wireless architectures, physical-layer security challenges, and low-latency packet scheduling explored at IIT Gandhinagar.",
-    date: "2026-02-28",
-    category: "Networks/6G",
-    tags: ["6G", "Telecom", "Cybersecurity", "Protocols", "IIT Gandhinagar"],
-    readTime: "6 min read",
+      "How to dispatch prompts across a tier of 9+ LLM backends using intent classification and contextual bandits, cutting token bills by 60%+ while preserving response quality.",
+    date: "2026-03-28",
+    category: "LLM Architecture",
+    tags: ["LLM Routing", "Cost Optimization", "Thompson Sampling", "FastAPI"],
+    readTime: "7 min read",
     featured: false,
     content: `
-# The Evolution from 5G to 6G
+# The Economic Burden of Frontier Models
 
-While 5G focused on enhanced Mobile Broadband (eMBB) and Ultra-Reliable Low-Latency Communication (uRLLC), 6G introduces fundamentally new paradigms:
+Sending every query to frontier flagship LLMs is economically unsustainable for high-traffic apps. Over 70% of user queries (formatting, extraction, conversational chit-chat) can be answered with equal precision by lightweight 8B/14B models.
 
-1. **Sub-Terahertz & Optical Wireless**: Frequencies between 100 GHz and 1 THz providing terabit-per-second throughput.
-2. **AI-Native Air Interface**: Machine learning models replacing handcrafted signal processing blocks (channel estimation, beamforming).
-3. **Integrated Sensing and Communication (ISAC)**: Radios acting simultaneously as radar and communication transceivers.
+## Dynamic Intent Dispatching
 
-## Physical Layer Cybersecurity
+By implementing an intent classification meta-router:
+- Queries are classified in <5ms using quantized embeddings.
+- High-difficulty analytical tasks are routed to frontier reasoning engines.
+- Standard utility tasks are fulfilled by ultra-fast local or low-cost endpoints with automatic fallback.
+    `
+  },
+  {
+    slug: "quantization-and-edge-deployment-for-vision-models",
+    title: "Quantization & Edge Optimization: Deploying Vision Models to Low-Power Hardware",
+    description:
+      "A technical walkthrough of INT8 and INT4 post-training quantization, pruning, and hardware-accelerated inference for neural vision networks on ARM and edge TPUs.",
+    date: "2026-03-12",
+    category: "Edge Systems",
+    tags: ["Quantization", "Edge AI", "OpenCV", "TensorRT", "Embedded Systems"],
+    readTime: "5 min read",
+    featured: false,
+    content: `
+# Taking AI from the Cloud to the Edge
 
-With open RAN and software-defined disaggregation, security cannot remain solely at the application layer. At IIT Gandhinagar, we explore automated protocol verification and intrusion detection algorithms operating directly on baseband IQ samples.
+Running deep vision models on edge hardware (like drones, aquatic buoys, or medical tablets) requires aggressive memory footprint reduction and power efficiency.
+
+## Key Optimization Techniques
+
+1. **Post-Training Dynamic Quantization (PTQ)**: Compressing 32-bit floating point weights into INT8/INT4 without retraining.
+2. **Channel Pruning**: Removing redundant convolutional filters based on L1-norm activation magnitude.
+3. **Zero-Copy Memory Buffers**: Streaming camera frames directly into hardware inference memory to eliminate CPU-GPU copying latency.
+    `
+  },
+  {
+    slug: "from-lab-to-patent-protecting-ai-inventions",
+    title: "From Code to Claims: Protecting Deep Tech & AI Innovations via Patents",
+    description:
+      "Key lessons learned from drafting and filing 7 patents at i-Hub Gujarat: how to structure technical disclosures, establish patentable subject matter, and navigate prior art.",
+    date: "2026-02-20",
+    category: "Startups & IP",
+    tags: ["Patents", "IP Strategy", "Invention Disclosures", "Startups"],
+    readTime: "8 min read",
+    featured: false,
+    content: `
+# Why Software & AI Patents Require a Systems Approach
+
+Pure algorithms and abstract mathematical methods are generally unpatentable. To secure defensible patent claims for AI and IoT innovations, the disclosure must tie the algorithmic logic directly to **physical transformations, hardware controllers, or measurable technical improvements**.
+
+## 3 Rules for Drafting Strong AI Patent Disclosures
+
+1. **Describe the Concrete Physical Pipeline**: Focus on sensor input acquisition, preprocessing pipelines, and hardware actuation mechanisms.
+2. **Detail Alternative Embodiments**: Never restrict claims to a single neural architecture; describe both transformer and CNN implementations.
+3. **Conduct Exhaustive Prior-Art Landscape Mapping**: Identify closest existing patents early to draft distinct technical boundaries.
     `
   }
 ];

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUp, Mail, Sparkles } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -18,13 +19,11 @@ export function Footer() {
           {/* Col 1: Identity */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-black text-white dark:bg-white dark:text-black flex items-center justify-center font-bold text-sm">
-                BP
-              </div>
+              <BrandLogo size={32} />
               <span className="text-lg font-bold tracking-tight text-neutral-950 dark:text-neutral-50">Bhaumik Patel</span>
             </div>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-md leading-relaxed">
-              AI/ML Engineer, Researcher, and Founder. Exploring deep learning architectures, multimodal intelligence, and patent engineering.
+              AI/ML Engineer, Researcher, and Founder. Exploring deep learning architectures, intelligent systems, and patent engineering.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <MagneticButton
@@ -80,18 +79,21 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Research & IP */}
+          {/* Col 3: Research & Writing */}
           <div className="space-y-3">
-            <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400">Research & IP</h4>
+            <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400">Research & Writing</h4>
             <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li>
-                <Link href="/#research" className="hover:text-black dark:hover:text-white transition-colors">Publications & Preprints</Link>
+                <Link href="/#research" className="hover:text-black dark:hover:text-white transition-colors">My Research Papers</Link>
               </li>
               <li>
                 <Link href="/#patents" className="hover:text-black dark:hover:text-white transition-colors">7 Patents Filed</Link>
               </li>
               <li>
-                <Link href="/#contact" className="hover:text-black dark:hover:text-white transition-colors">Collaboration & Contact</Link>
+                <Link href="/blog" className="hover:text-black dark:hover:text-white transition-colors">Writing & Research Simplified</Link>
+              </li>
+              <li>
+                <Link href="/#contact" className="hover:text-black dark:hover:text-white transition-colors">Get in Touch</Link>
               </li>
             </ul>
           </div>

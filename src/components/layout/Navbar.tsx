@@ -8,6 +8,8 @@ import { Menu, X, Command, Sparkles } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/utils";
 
+import { BrandLogo } from "@/components/ui/BrandLogo";
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,7 +30,7 @@ export function Navbar() {
     { label: "Experience", href: "/#experience" },
     { label: "Projects", href: "/#projects" },
     { label: "Research", href: "/#research" },
-    { label: "Patents", href: "/#patents" },
+    { label: "Hub & Blog", href: "/blog" },
     { label: "Contact", href: "/#contact" },
   ];
 
@@ -50,10 +52,8 @@ export function Navbar() {
           href="/"
           className="group flex items-center gap-2.5 px-3 py-1.5 rounded-full glass-pill transition-all duration-300 hover:scale-105"
         >
-          <div className="w-6 h-6 rounded-full bg-black text-white dark:bg-white dark:text-black flex items-center justify-center font-bold text-xs tracking-tight">
-            BP
-          </div>
-          <span className="text-xs font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 hidden sm:inline-block">
+          <BrandLogo size={24} />
+          <span className="text-xs font-semibold tracking-tight text-neutral-950 dark:text-neutral-50 hidden sm:inline-block">
             Bhaumik Patel
           </span>
         </Link>
@@ -66,11 +66,23 @@ export function Navbar() {
           )}
         >
           {navLinks.map((link) => {
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : link.href.startsWith("/#")
+                ? false
+                : pathname.startsWith(link.href);
+
             return (
               <Link
                 key={link.label}
                 href={link.href}
-                className="relative px-3.5 py-1.5 rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 transition-all duration-200"
+                className={cn(
+                  "relative px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200",
+                  isActive
+                    ? "text-black dark:text-white bg-neutral-200/80 dark:bg-neutral-800/80"
+                    : "text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50"
+                )}
               >
                 {link.label}
               </Link>

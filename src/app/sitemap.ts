@@ -1,5 +1,7 @@
 import { MetadataRoute } from "next";
 import { researchPapers } from "@/content/research-data";
+import { blogPosts } from "@/content/blog-data";
+import { simplifiedResearchPapers } from "@/content/simplified-research-data";
 import { projectsData } from "@/content/projects-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -7,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes = [
     "",
+    "/blog",
     "/resume",
   ].map((route) => ({
     url: `${siteUrl}${route}`,
@@ -15,11 +18,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1.0 : 0.8,
   }));
 
-  const researchRoutes = researchPapers.map((paper) => ({
-    url: `${siteUrl}/research/${paper.slug}`,
-    lastModified: new Date(paper.date),
+  const blogRoutes = blogPosts.map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  const simplifiedPaperRoutes = simplifiedResearchPapers.map((paper) => ({
+    url: `${siteUrl}/research-simplified/${paper.slug}`,
+    lastModified: new Date(),
     changeFrequency: "monthly" as const,
-    priority: 0.9,
+    priority: 0.8,
   }));
 
   const projectRoutes = projectsData.map((project) => ({
@@ -29,5 +39,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...researchRoutes, ...projectRoutes];
+  return [...staticRoutes, ...blogRoutes, ...simplifiedPaperRoutes, ...projectRoutes];
 }

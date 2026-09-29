@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Send, CheckCircle2, Copy, Check, Sparkles } from "lucide-react";
+import { Mail, Send, CheckCircle2, Copy, Check, AlertCircle, Sparkles } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -11,12 +11,14 @@ import { TextReveal } from "@/components/ui/TextReveal";
 export function ContactSection() {
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+  const [lastSubmittedMailto, setLastSubmittedMailto] = useState("");
 
   const email = "patelbhaumik6115@gmail.com";
 
@@ -28,25 +30,40 @@ export function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("submitting");
+    if (!formData.email.trim() || !formData.message.trim()) {
+      setStatus("error");
+      setErrorMessage("Please enter your email and message.");
+      return;
+    }
 
+    setStatus("submitting");
+    setErrorMessage("");
+
+    const subjectText = formData.subject.trim() || `New Message from ${formData.email}`;
+    const bodyText = `Sender Email: ${formData.email}\nSender Name: ${formData.name.trim() || "Visitor"}\n\nMessage:\n${formData.message}`;
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(bodyText)}`;
+
+    setLastSubmittedMailto(mailtoUrl);
+
+    // Also send to local API endpoint
     try {
-      const res = await fetch("/api/contact", {
+      await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name || "Visitor",
+          email: formData.email,
+          subject: subjectText,
+          message: formData.message,
+        }),
       });
-
-      if (res.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        setStatus("error");
-      }
     } catch {
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      // Background logging fallback
     }
+
+    // Trigger mail client directly
+    window.location.href = mailtoUrl;
+    setStatus("success");
   };
 
   return (
@@ -71,8 +88,8 @@ export function ContactSection() {
               <h3 className="text-xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50 mb-2">
                 Initiate a Conversation
               </h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                Whether you want to discuss a research collaboration, AI system architectures, patent engineering, or novel ideas, I would love to connect.
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
+                Whether you want to discuss AI architectures, deep learning research, patent engineering, or strategic collaborations, I would love to connect.
               </p>
             </div>
 
@@ -134,9 +151,17 @@ export function ContactSection() {
         {/* Right Col: Interactive Contact Form (7 cols) */}
         <div className="lg:col-span-7">
           <GlassCard className="p-6 sm:p-8">
-            <h3 className="text-xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50 mb-6">
-              Send a Direct Message
-            </h3>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
+                Send a Direct Message
+              </h3>
+              <a
+                href={`mailto:${email}?subject=Collaboration%20Inquiry`}
+                className="text-xs font-mono text-neutral-500 hover:text-black dark:hover:text-white underline"
+              >
+                Open Email Client →
+              </a>
+            </div>
 
             <AnimatePresence mode="wait">
               {status === "success" ? (
@@ -144,46 +169,54 @@ export function ContactSection() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="py-12 flex flex-col items-center justify-center text-center space-y-3"
+                  className="py-10 flex flex-col items-center justify-center text-center space-y-4"
                 >
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6" />
+                  <div className="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h4 className="text-lg font-bold text-neutral-950 dark:text-neutral-50">
-                    Message Dispatched Successfully
-                  </h4>
-                  <p className="text-xs sm:text-sm text-neutral-500 max-w-sm">
-                    Thank you for reaching out. I will review your message and reply promptly.
-                  </p>
+                  <div className="space-y-1">
+                    <h4 className="text-lg font-bold text-neutral-950 dark:text-neutral-50">
+                      Email Ready & Dispatched
+                    </h4>
+                    <p className="text-xs sm:text-sm text-neutral-500 max-w-md">
+                      Your message has been composed for <span className="font-mono font-medium text-neutral-900 dark:text-neutral-100">{email}</span>. If your mail app did not open automatically, click below to send directly:
+                    </p>
+                  </div>
+                  
+                  {lastSubmittedMailto && (
+                    <a
+                      href={lastSubmittedMailto}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-semibold text-xs hover:scale-105 transition-all shadow-md"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Open Mail App & Send</span>
+                    </a>
+                  )}
+
                   <button
                     type="button"
-                    onClick={() => setStatus("idle")}
-                    className="mt-4 px-4 py-2 rounded-full glass-pill text-xs font-medium text-neutral-700 dark:text-neutral-300"
+                    onClick={() => {
+                      setStatus("idle");
+                      setFormData({ name: "", email: "", subject: "", message: "" });
+                    }}
+                    className="text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-white underline pt-2"
                   >
-                    Send Another Message
+                    Write another message
                   </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {status === "error" && (
+                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-600 dark:text-red-400 flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{errorMessage || "Failed to transmit message. Please try again."}</span>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label htmlFor="name" className="text-xs font-mono text-neutral-400">
-                        Your Name
-                      </label>
-                      <input
-                        id="name"
-                        required
-                        type="text"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Ada Lovelace"
-                        className="w-full px-4 py-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
                       <label htmlFor="email" className="text-xs font-mono text-neutral-400">
-                        Your Email
+                        Your Email *
                       </label>
                       <input
                         id="email"
@@ -191,7 +224,21 @@ export function ContactSection() {
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="ada@example.com"
+                        placeholder="yourname@domain.com"
+                        className="w-full px-4 py-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label htmlFor="name" className="text-xs font-mono text-neutral-400">
+                        Your Name (Optional)
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Dr. Alex Rivera"
                         className="w-full px-4 py-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors"
                       />
                     </div>
@@ -199,22 +246,21 @@ export function ContactSection() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="subject" className="text-xs font-mono text-neutral-400">
-                      Subject
+                      Subject (Optional)
                     </label>
                     <input
                       id="subject"
-                      required
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="Research collaboration / AI architecture project"
+                      placeholder="Collaboration inquiry / AI research discussion"
                       className="w-full px-4 py-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <label htmlFor="message" className="text-xs font-mono text-neutral-400">
-                      Message
+                      Your Message *
                     </label>
                     <textarea
                       id="message"
@@ -222,12 +268,15 @@ export function ContactSection() {
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Hello Bhaumik, I would like to discuss..."
+                      placeholder="Hi Bhaumik, I would love to connect about..."
                       className="w-full px-4 py-3 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors resize-none"
                     />
                   </div>
 
-                  <div className="pt-2 flex justify-end">
+                  <div className="pt-2 flex items-center justify-between">
+                    <span className="text-[11px] font-mono text-neutral-400">
+                      * Required fields
+                    </span>
                     <button
                       type="submit"
                       disabled={status === "submitting"}

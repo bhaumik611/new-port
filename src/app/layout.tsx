@@ -61,6 +61,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [
+      { url: "/brand-icon.svg", type: "image/svg+xml" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/brand-icon.svg",
+    apple: "/brand-icon.svg",
+  },
 };
 
 export default function RootLayout({

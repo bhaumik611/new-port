@@ -140,24 +140,24 @@ export function ProjectsSection() {
           </GlassCard>
         ))}
 
-        {/* Dynamic / Live GitHub Profile Banner Card */}
+        {/* Dynamic / Live GitHub Profile Banner Card with Compact Button */}
         <GlassCard
           tilt={true}
           spotlight={true}
-          className="md:col-span-2 p-8 sm:p-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-dashed border-neutral-300/80 dark:border-neutral-700/80"
+          className="md:col-span-2 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-5 border-dashed border-neutral-300/80 dark:border-neutral-700/80"
         >
-          <div className="space-y-2 max-w-xl">
+          <div className="space-y-1.5 max-w-xl">
             <div className="flex items-center gap-2">
-              <GithubIcon className="w-5 h-5 text-neutral-900 dark:text-neutral-100" />
+              <GithubIcon className="w-4 h-4 text-neutral-900 dark:text-neutral-100" />
               <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">
                 Open Source Ecosystem
               </span>
             </div>
-            <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
+            <h4 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
               Explore More Repositories on GitHub
             </h4>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-              Active contributor to benchmark suites (including EleutherAI Indic benchmarks), research replication codebases, and experimental AI toolings.
+            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Active contributor to evaluation benchmark suites, research replication codebases, and experimental AI tools.
             </p>
           </div>
 
@@ -167,10 +167,11 @@ export function ProjectsSection() {
               target="_blank"
               rel="noopener noreferrer"
               variant="primary"
-              size="lg"
+              size="sm"
+              className="px-4 py-2 text-xs"
             >
-              <GithubIcon className="w-4 h-4" />
-              <span>Visit @bhaumik611</span>
+              <GithubIcon className="w-3.5 h-3.5" />
+              <span>@bhaumik611</span>
             </MagneticButton>
           </div>
         </GlassCard>
