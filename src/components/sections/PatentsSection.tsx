@@ -12,6 +12,10 @@ import {
   Activity,
   Cpu,
   Award,
+  Shield,
+  BookOpen,
+  Server,
+  Car,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { TextReveal } from "@/components/ui/TextReveal";
@@ -23,6 +27,11 @@ const domainIcons: Record<string, any> = {
   "Healthcare AI": Activity,
   "Telecom & Networks": Cpu,
   "Civic AI": Award,
+  "AI & Secure Computing": Shield,
+  "AI & EdTech": BookOpen,
+  "AI Infrastructure & Security": Server,
+  "Automotive Safety & AI": Car,
+  "MedTech, NDT & Machine Learning": Activity,
 };
 
 export function PatentsSection() {
@@ -32,11 +41,7 @@ export function PatentsSection() {
 
   const domains = [
     "All",
-    "IoT & Mobility",
-    "AgriTech & Bio-IoT",
-    "Healthcare AI",
-    "Telecom & Networks",
-    "Civic AI",
+    ...Array.from(new Set(patentsAndRecognition.map((item) => item.domain))),
   ];
 
   const filteredItems = patentsAndRecognition.filter(

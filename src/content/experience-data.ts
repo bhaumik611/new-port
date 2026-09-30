@@ -13,8 +13,8 @@ export interface ExperienceItem {
 export interface PatentRecognitionItem {
   id: string;
   title: string;
-  category: "Patent Filed" | "Award & Recognition" | "Startup Venture";
-  domain: "IoT & Mobility" | "AgriTech & Bio-IoT" | "Healthcare AI" | "Telecom & Networks" | "Civic AI";
+  category: "Patent Filed" | "Award & Recognition" | "Startup Venture" | "Patent Specification" | string;
+  domain: string;
   period?: string;
   description: string;
   badge: string;
@@ -127,115 +127,197 @@ export const experiences: ExperienceItem[] = [
 
 export const patentsAndRecognition: PatentRecognitionItem[] = [
   {
-    id: "trackncontrol",
-    title: "TrackNControl",
-    category: "Patent Filed",
-    domain: "IoT & Mobility",
-    badge: "IoT Patent #1",
-    description:
-      "Comprehensive IoT-enabled real-time tracking, cloud diagnostics, and remote governance infrastructure engineered specifically for rental two-wheeler and e-bike fleets.",
-    highlights: [
-      "Precision GPS/GNSS tracking with cellular telemetry fallback and tamper detection",
-      "Automated dynamic geo-fenced speed regulation and remote immobilization start/stop",
-      "Centralized cloud dashboard for fleet health monitoring and battery life diagnostics"
-    ]
-  },
-  {
-    id: "microsight",
-    title: "MicroSight",
-    category: "Patent Filed",
-    domain: "AgriTech & Bio-IoT",
-    badge: "Bio-IoT Patent #2",
-    description:
-      "Autonomous solar-powered floating IoT buoy equipped with integrated micro-imaging optics and edge vision algorithms to monitor pond ecology and plankton density.",
-    highlights: [
-      "Automated in-situ aquatic microscopy capturing plankton blooms and cyanobacteria counts",
-      "On-device neural inference classifying water toxicity parameters in real time",
-      "Automated GSM/LoRa alerts dispatched to aquaculturists before dangerous algal blooms cause fish mortality"
-    ]
-  },
-  {
-    id: "farmaspray",
-    title: "FarmaSpray",
-    category: "Patent Filed",
-    domain: "AgriTech & Bio-IoT",
-    badge: "AgriTech Patent #3",
-    description:
-      "Smart precision agricultural crop-disease detection and variable-rate automated irrigation and pesticide dispensing system.",
-    highlights: [
-      "Edge-vision neural network identifying early fungal, viral, and bacterial leaf pathology",
-      "Targeted micro-nozzle actuation dispensing chemical treatments only where disease is detected",
-      "Reduces chemical pesticide runoff by up to 60% while conserving local groundwater resources"
-    ]
-  },
-  {
-    id: "neurosync-eeg",
-    title: "NeuroSync-EEG",
-    category: "Patent Filed",
-    domain: "Healthcare AI",
-    badge: "Medical Patent #4",
-    description:
-      "Low-power wearable neural biosignal acquisition patch with adaptive motion-artifact cancellation for continuous ICU & ambulatory epileptic seizure detection.",
-    highlights: [
-      "Active impedance compensation filtering high-frequency muscle twitches and ocular motion",
-      "Ultra-low latency sub-15ms edge inference on battery-efficient microcontroller units",
-      "Encrypted wireless telemetry transmitting instant emergency alerts to attending medical teams"
-    ]
-  },
-  {
-    id: "secure6g-mesh",
-    title: "Secure6G-Mesh",
-    category: "Patent Filed",
-    domain: "Telecom & Networks",
-    badge: "Telecom Patent #5",
-    description:
-      "Zero-trust physical layer authentication and intelligent reflective surface (IRS) beamforming coordination mechanism for decentralized 6G sub-THz mesh networks.",
-    highlights: [
-      "Dynamic channel state information (CSI) fingerprinting preventing unauthorized base station spoofing",
-      "uRLLC-optimized packet scheduling under non-stationary interference conditions",
-      "Software-defined radio verification achieving sub-millisecond end-to-end handshake latency"
-    ]
-  },
-  {
-    id: "smartaqua-grid",
-    title: "SmartAqua-Grid",
-    category: "Patent Filed",
-    domain: "AgriTech & Bio-IoT",
-    badge: "IoT Patent #6",
-    description:
-      "Distributed multi-spectral sensor telemetry system for automated irrigation canal flow regulation and heavy-metal contamination monitoring in agrarian basins.",
-    highlights: [
-      "Multi-parametric probe array monitoring pH, dissolved oxygen, turbidity, and heavy metal presence",
-      "Self-calibrating solar nodes communicating via multi-hop LoRaWAN mesh networks",
-      "Predictive watershed discharge analytics preventing canal overflows and optimizing seasonal allocation"
-    ]
-  },
-  {
-    id: "adaptivetraffic-ai",
-    title: "AdaptiveTraffic-AI",
-    category: "Patent Filed",
-    domain: "Civic AI",
-    badge: "Civic Patent #7",
-    description:
-      "Decentralized edge-vision signal controller optimizing intersection light timings in real time with emergency vehicle preemption and pedestrian safety bounds.",
-    highlights: [
-      "Multi-camera vehicle density and queue length estimation running on local edge TPUs",
-      "Automatic dynamic green-wave corridor clearance for authorized ambulances and emergency fleets",
-      "34% reduction in peak-hour intersection congestion and idle fuel consumption"
-    ]
-  },
-  {
-    id: "tatvam-award",
-    title: "1st Place — PDEU Business Plan Pitch",
-    category: "Award & Recognition",
-    domain: "Civic AI",
-    period: "2025",
-    badge: "Venture Winner (85+ Teams)",
-    description:
-      "Awarded 1st place out of 85+ competing ventures for Tatvam AI's Indic language foundation model roadmap, recognized by the founder of GoaMiles.",
-    highlights: [
-      "Evaluated across technical feasibility, commercial IP defensibility, and market impact",
-      "Praised for innovative Indic tokenization pipelines and low-resource data synthesis methods"
+  id: "trackncontrol",
+
+  title: "TrackNControl",
+
+  category: "Patent Filed",
+
+  domain: "IoT & Mobility",
+
+  badge: "IoT Patent #1",
+
+  description:
+    "Comprehensive IoT-enabled real-time tracking, cloud diagnostics, and remote governance infrastructure engineered specifically for rental two-wheeler and e-bike fleets.",
+
+  highlights: [
+
+    "Precision GPS/GNSS tracking with cellular telemetry fallback and tamper detection",
+
+    "Automated dynamic geo-fenced speed regulation and remote immobilization start/stop",
+
+    "Centralized cloud dashboard for fleet health monitoring and battery life diagnostics"
+
+  ]
+
+},
+
+{
+  id: "microsight",
+
+  title: "MicroSight",
+
+  category: "Patent Filed",
+
+  domain: "AgriTech & Bio-IoT",
+
+  badge: "Bio-IoT Patent #2",
+
+  description:
+    "Pond-deployed embedded monitoring system combining underwater imaging, onboard plankton estimation, and automated water-safety evaluation for continuous aquatic monitoring.",
+
+  highlights: [
+
+    "Floating control unit coupled with a submerged imaging probe for continuous in-situ plankton monitoring",
+
+    "Onboard image processing generates approximate numerical plankton concentration estimates without laboratory infrastructure",
+
+    "Automated safety evaluation triggers buzzer, visual warnings, and wireless notifications when unsafe conditions are detected"
+
+  ]
+
+},
+
+{
+  id: "neurovault",
+
+  title: "NeuroVault",
+
+  category: "Patent Filed",
+
+  domain: "AI & Secure Computing",
+
+  badge: "AI Hardware Patent #3",
+
+  description:
+    "Detachable hardware-based AI memory and model adaptation module designed to provide secure, portable, cross-platform personalization through encrypted semantic memory and interactive prompt reconstruction.",
+
+  highlights: [
+
+    "Hardware-anchored encrypted semantic memory storing embeddings, preferences, and model adaptation parameters",
+
+    "On-device similarity retrieval reconstructs context-complete prompts from a short user request",
+
+    "Dual-mode execution supporting manual prompt reuse or authenticated direct API transmission with encrypted credentials"
+
+  ]
+
+},
+
+{
+  id: "polyglot-ai",
+
+  title: "PolyGlot-AI",
+
+  category: "Patent Filed",
+
+  domain: "AI & EdTech",
+
+  badge: "AI Learning Patent #4",
+
+  description:
+    "Portable multilingual learning and translation device integrating speech recognition, language detection, AI-driven optimization, translation, and back translation into a standalone learning assistant.",
+
+  highlights: [
+
+    "Real-time speech capture and automatic language identification followed by AI-based contextual optimization",
+
+    "One-touch multilingual translation with offline capability through preloaded models",
+
+    "Stores optimized translations for future review, reinforcement, and language-learning practice"
+
+  ]
+
+},
+
+{
+  id: "mnemosync",
+
+  title: "MnemoSync",
+
+  category: "Patent Filed",
+
+  domain: "AI Infrastructure & Security",
+
+  badge: "AI Interoperability Patent #5",
+
+  description:
+    "Computer-implemented framework for securely transferring personalized AI semantic memory and model adaptation parameters across heterogeneous AI runtimes without dependence on a single vendor.",
+
+  highlights: [
+
+    "Cryptographically seals embeddings, preferences, and model adaptation parameters into a portable memory object",
+
+    "Authenticated cross-runtime handshake with compatibility arbitration before memory or adaptation parameters are exposed",
+
+    "Similarity-gated selective decryption, runtime injection, continuous re-sealing, and session revocation for controlled AI personalization"
+
+  ]
+
+},
+
+{
+  id: "oxygen-thermal-regulation",
+
+  title: "Oxygen & Thermal Regulation System",
+
+  category: "Patent Filed",
+
+  domain: "Automotive Safety & AI",
+
+  badge: "Automotive Safety Patent #6",
+
+  description:
+    "Intelligent vehicle safety system that detects unattended occupants and actively regulates cabin temperature and oxygen conditions through an autonomous closed-loop intervention mechanism.",
+
+  highlights: [
+
+    "AI-assisted occupant classification using weight sensing and cabin imaging to identify infants, children, pets, or adults",
+
+    "Continuous monitoring of cabin temperature and oxygen with independent ignition-powered backup safety systems",
+
+    "Automatic ventilation and supplemental oxygen intervention with closed-loop recovery and door-open safety override"
+
+  ]
+
+},
+
+{
+  id: "adaptive-ultrasonic-vaccine-screening",
+
+  title: "Adaptive Ultrasonic Vaccine Screening",
+
+  category: "Patent Specification",
+
+  domain: "MedTech, NDT & Machine Learning",
+
+  badge: "MedTech + ML Patent",
+
+  description:
+    "Portable non-destructive screening system that uses adaptive ultrasonic interrogation and embedded machine learning to detect freeze-induced damage in sealed and labelled vaccine vials.",
+
+  highlights: [
+
+    "Ultrasonic backscatter analysis through the intact glass vial and label without opening or consuming the vaccine",
+
+    "Embedded temporal machine learning model classifies freeze damage while a policy network adaptively reconfigures excitation and agitation parameters",
+
+    "Confidence-aware three-way decision system—sound, freeze-damaged, or inconclusive—with self-verification and battery-powered point-of-use operation"
     ]
   }
+  // },
+  // {
+  //   id: "tatvam-award",
+  //   title: "1st Place — PDEU Business Plan Pitch",
+  //   category: "Award & Recognition",
+  //   domain: "Civic AI",
+  //   period: "2025",
+  //   badge: "Venture Winner (85+ Teams)",
+  //   description:
+  //     "Awarded 1st place out of 85+ competing ventures for Tatvam AI's Indic language foundation model roadmap, recognized by the founder of GoaMiles.",
+  //   highlights: [
+  //     "Evaluated across technical feasibility, commercial IP defensibility, and market impact",
+  //     "Praised for innovative Indic tokenization pipelines and low-resource data synthesis methods"
+  //   ]
+  // }
 ];
