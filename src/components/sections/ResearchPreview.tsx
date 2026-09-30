@@ -6,6 +6,7 @@ import { BookOpen, ArrowRight, Clock, Calendar, Sparkles } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { TextReveal } from "@/components/ui/TextReveal";
+import { PublicationBadge } from "@/components/research/PublicationStatus";
 import { researchPapers } from "@/content/research-data";
 import { formatDate } from "@/lib/utils";
 
@@ -42,12 +43,15 @@ export function ResearchPreview() {
             className="flex flex-col justify-between p-6 sm:p-7 group"
           >
             <div>
-              {/* Category & Time */}
-              <div className="flex items-center justify-between mb-3 text-xs font-mono text-neutral-400">
-                <span className="px-2.5 py-0.5 rounded-full glass-pill text-[10px] text-neutral-700 dark:text-neutral-300">
-                  {paper.category}
-                </span>
-                <span className="flex items-center gap-1">
+              {/* Category & Status */}
+              <div className="flex items-center justify-between mb-3 text-xs font-mono text-neutral-400 gap-1">
+                <div className="flex items-center gap-1.5 truncate">
+                  <span className="px-2.5 py-0.5 rounded-full glass-pill text-[10px] text-neutral-700 dark:text-neutral-300 truncate">
+                    {paper.category}
+                  </span>
+                  <PublicationBadge status={paper.publicationStatus} />
+                </div>
+                <span className="flex items-center gap-1 shrink-0">
                   <Clock className="w-3 h-3" />
                   {paper.readTime}
                 </span>
@@ -66,7 +70,7 @@ export function ResearchPreview() {
 
             <div className="mt-6 pt-4 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between">
               <span className="text-xs font-mono text-neutral-400">
-                {formatDate(paper.date)}
+                {paper.date.length === 4 ? paper.date : formatDate(paper.date)}
               </span>
 
               <Link

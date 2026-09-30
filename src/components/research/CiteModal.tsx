@@ -130,7 +130,7 @@ export function CiteModal({ paper, isOpen, onClose }: CiteModalProps) {
 
             {/* Modal Footer */}
             <div className="mt-6 flex items-center justify-between text-xs text-neutral-500">
-              <span>DOI: {paper.doi || "Pending"}</span>
+              <span>{paper.doi ? `DOI: ${paper.doi}` : "Publication Details: Pending"}</span>
               <button
                 type="button"
                 onClick={onClose}

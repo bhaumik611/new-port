@@ -137,7 +137,7 @@ export function AboutBento() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             <div className="space-y-1">
               <div className="text-3xl sm:text-4xl font-extrabold text-neutral-950 dark:text-neutral-50">
-                <StatCounter value={4} />
+                <StatCounter value={6} />
               </div>
               <div className="text-xs text-neutral-500 font-medium">Research Papers</div>
             </div>

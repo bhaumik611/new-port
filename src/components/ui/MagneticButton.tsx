@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useCallback } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -26,26 +25,33 @@ export function MagneticButton({
   rel,
   variant = "glass",
   size = "md",
-  strength = 0.28,
+  strength = 0.2,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const rafRef = useRef<number | null>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    setPosition({ x: middleX * strength, y: middleY * strength });
-  };
+    const element = ref.current;
 
-  const handleMouseLeave = () => {
-    setPosition({ x: 0, y: 0 });
-  };
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
+    rafRef.current = requestAnimationFrame(() => {
+      const { left, top, width, height } = element.getBoundingClientRect();
+      const middleX = e.clientX - (left + width / 2);
+      const middleY = e.clientY - (top + height / 2);
+      element.style.transform = `translate3d(${middleX * strength}px, ${middleY * strength}px, 0)`;
+    });
+  }, [strength]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!ref.current) return;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    ref.current.style.transform = "translate3d(0px, 0px, 0)";
+  }, []);
 
   const baseStyles =
-    "relative inline-flex items-center justify-center font-medium rounded-full transition-all duration-200 outline-none select-none";
+    "relative inline-flex items-center justify-center font-medium rounded-full transition-colors duration-200 outline-none select-none";
 
   const sizeStyles = {
     sm: "px-4 py-1.5 text-xs gap-1.5",
@@ -71,14 +77,16 @@ export function MagneticButton({
     className
   );
 
-  const content = (
-    <motion.div
+  return (
+    <div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 350, damping: 20, mass: 0.5 }}
-      className="inline-block"
+      style={{
+        transition: "transform 0.18s cubic-bezier(0.25, 1, 0.5, 1)",
+        willChange: "transform",
+      }}
+      className="inline-block transform-gpu"
     >
       {href ? (
         <Link
@@ -95,8 +103,6 @@ export function MagneticButton({
           {children}
         </button>
       )}
-    </motion.div>
+    </div>
   );
-
-  return content;
 }

@@ -1,24 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 
 export function CustomCursor() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
+  const cursorDotRef = useRef<HTMLDivElement>(null);
+  const cursorRingRef = useRef<HTMLDivElement>(null);
   const [isTouch, setIsTouch] = useState(true);
 
-  const mouseX = useMotionValue(-100);
-  const mouseY = useMotionValue(-100);
-
-  // High-performance silky spring physics
-  const springConfig = { damping: 26, stiffness: 400, mass: 0.35 };
-  const smoothX = useSpring(mouseX, springConfig);
-  const smoothY = useSpring(mouseY, springConfig);
-
   useEffect(() => {
-    // Check if device is touch or fine pointer
+    // Only enable custom cursor for fine precision pointer devices (desktop mouse)
     const isCoarse = window.matchMedia("(pointer: coarse)").matches;
     if (isCoarse) {
       setIsTouch(true);
@@ -27,27 +17,77 @@ export function CustomCursor() {
     setIsTouch(false);
     document.body.classList.add("custom-cursor-active");
 
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+    let isHovered = false;
+    let isClicking = false;
+    let isVisible = false;
+    let rafId: number;
+
     const onMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!isVisible) {
+        isVisible = true;
+        if (cursorDotRef.current) cursorDotRef.current.style.opacity = "1";
+        if (cursorRingRef.current) cursorRingRef.current.style.opacity = "1";
+      }
     };
 
-    const onMouseDown = () => setIsClicking(true);
-    const onMouseUp = () => setIsClicking(false);
+    const onMouseDown = () => {
+      isClicking = true;
+    };
 
-    const onMouseLeave = () => setIsVisible(false);
-    const onMouseEnter = () => setIsVisible(true);
+    const onMouseUp = () => {
+      isClicking = false;
+    };
 
-    const handleElementHover = (e: MouseEvent) => {
+    const onMouseLeave = () => {
+      isVisible = false;
+      if (cursorDotRef.current) cursorDotRef.current.style.opacity = "0";
+      if (cursorRingRef.current) cursorRingRef.current.style.opacity = "0";
+    };
+
+    const onMouseEnter = () => {
+      isVisible = true;
+      if (cursorDotRef.current) cursorDotRef.current.style.opacity = "1";
+      if (cursorRingRef.current) cursorRingRef.current.style.opacity = "1";
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
-
-      const interactive = target.closest(
-        "a, button, input, textarea, select, [role='button'], .clickable, summary, [data-interactive='true']"
+      isHovered = Boolean(
+        target.closest(
+          "a, button, input, textarea, select, [role='button'], .clickable, summary"
+        )
       );
+    };
 
-      setIsHovered(!!interactive);
+    // Ultra-smooth 120 FPS render loop with lerp (linear interpolation)
+    const render = () => {
+      // Lerp for smooth trailing ring
+      ringX += (mouseX - ringX) * 0.22;
+      ringY += (mouseY - ringY) * 0.22;
+
+      if (cursorDotRef.current) {
+        cursorDotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${
+          isClicking ? 0.6 : isHovered ? 1.5 : 1
+        })`;
+      }
+
+      if (cursorRingRef.current) {
+        cursorRingRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${
+          isClicking ? 0.8 : isHovered ? 1.6 : 1
+        })`;
+        cursorRingRef.current.style.borderColor = isHovered
+          ? "rgba(160, 160, 160, 0.8)"
+          : "rgba(160, 160, 160, 0.35)";
+      }
+
+      rafId = requestAnimationFrame(render);
     };
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
@@ -55,67 +95,40 @@ export function CustomCursor() {
     window.addEventListener("mouseup", onMouseUp, { passive: true });
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mouseenter", onMouseEnter);
-    document.addEventListener("mouseover", handleElementHover, { passive: true });
+    document.addEventListener("mouseover", handleMouseOver, { passive: true });
+
+    rafId = requestAnimationFrame(render);
 
     return () => {
       document.body.classList.remove("custom-cursor-active");
+      cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseenter", onMouseEnter);
-      document.removeEventListener("mouseover", handleElementHover);
+      document.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [isVisible, mouseX, mouseY]);
+  }, []);
 
   if (isTouch) return null;
 
   return (
     <>
-      {/* Ultra-modern Inverted Fluid Cursor Lens */}
-      <motion.div
+      {/* High-speed hardware-accelerated precision dot */}
+      <div
+        ref={cursorDotRef}
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[99999] rounded-full mix-blend-difference bg-white"
-        style={{
-          x: smoothX,
-          y: smoothY,
-          translateX: "-50%",
-          translateY: "-50%",
-          opacity: isVisible ? 1 : 0,
-        }}
-        animate={{
-          width: isHovered ? 52 : isClicking ? 14 : 10,
-          height: isHovered ? 52 : isClicking ? 14 : 10,
-          scale: isClicking ? 0.85 : 1,
-        }}
-        transition={{
-          type: "spring",
-          damping: 24,
-          stiffness: 380,
-          mass: 0.35,
-        }}
+        className="pointer-events-none fixed top-0 left-0 z-[99999] w-2 h-2 rounded-full bg-neutral-900 dark:bg-white transition-opacity duration-150 transform-gpu opacity-0"
+        style={{ willChange: "transform" }}
       />
 
-      {/* Subtle Ambient Glow Aura on Hover */}
-      <motion.div
+      {/* Silky trailing ring */}
+      <div
+        ref={cursorRingRef}
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[99998] rounded-full blur-[8px] bg-neutral-500/20 dark:bg-white/20"
-        style={{
-          x: smoothX,
-          y: smoothY,
-          translateX: "-50%",
-          translateY: "-50%",
-          opacity: isVisible && isHovered ? 1 : 0,
-        }}
-        animate={{
-          width: isHovered ? 70 : 0,
-          height: isHovered ? 70 : 0,
-        }}
-        transition={{
-          type: "spring",
-          damping: 28,
-          stiffness: 300,
-        }}
+        className="pointer-events-none fixed top-0 left-0 z-[99998] w-8 h-8 rounded-full border border-neutral-400/40 transition-[opacity,border-color] duration-150 transform-gpu opacity-0"
+        style={{ willChange: "transform" }}
       />
     </>
   );

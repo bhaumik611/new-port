@@ -13,11 +13,16 @@ import {
   Calendar,
   Clock,
   Sparkles,
+  FileText,
 } from "lucide-react";
 import { GithubIcon } from "@/components/ui/Icons";
 import { researchPapers } from "@/content/research-data";
 import { CiteModal } from "@/components/research/CiteModal";
 import { ExplainLike12Toggle } from "@/components/research/ExplainLike12Toggle";
+import {
+  PublicationBadge,
+  getResearchLinkState,
+} from "@/components/research/PublicationStatus";
 import { formatDate } from "@/lib/utils";
 
 export default function ResearchPaperClient({ slug }: { slug: string }) {
@@ -29,6 +34,8 @@ export default function ResearchPaperClient({ slug }: { slug: string }) {
   if (!paper) {
     notFound();
   }
+
+  const linkState = getResearchLinkState(paper);
 
   const currentIndex = researchPapers.findIndex((p) => p.slug === slug);
   const prevPaper = currentIndex > 0 ? researchPapers[currentIndex - 1] : null;
@@ -69,14 +76,17 @@ export default function ResearchPaperClient({ slug }: { slug: string }) {
       {/* Hero Header */}
       <div className="space-y-6 pb-8 border-b border-neutral-200/60 dark:border-neutral-800/60">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="px-3 py-1 rounded-full text-xs font-mono glass-pill text-neutral-700 dark:text-neutral-300">
-            {paper.category}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-xs font-mono glass-pill text-neutral-700 dark:text-neutral-300">
+              {paper.category}
+            </span>
+            <PublicationBadge status={paper.publicationStatus} />
+          </div>
 
           <div className="flex items-center gap-3 text-xs font-mono text-neutral-500">
             <span className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5" />
-              {formatDate(paper.date)}
+              {paper.date.length === 4 ? paper.date : formatDate(paper.date)}
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
@@ -97,7 +107,7 @@ export default function ResearchPaperClient({ slug }: { slug: string }) {
           </div>
           <div>
             <strong className="text-neutral-800 dark:text-neutral-200 font-semibold">Venue:</strong>{" "}
-            {paper.venue} {paper.doi && `(DOI: ${paper.doi})`}
+            {paper.venue} {linkState.hasDoi && `(DOI: ${paper.doi})`}
           </div>
         </div>
 
@@ -115,7 +125,7 @@ export default function ResearchPaperClient({ slug }: { slug: string }) {
               <span>Cite Paper</span>
             </button>
 
-            {paper.paperUrl && (
+            {linkState.hasPaperUrl ? (
               <a
                 href={paper.paperUrl}
                 target="_blank"
@@ -125,9 +135,26 @@ export default function ResearchPaperClient({ slug }: { slug: string }) {
                 <span>Read Original</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-pill text-xs font-mono text-neutral-500 dark:text-neutral-400 select-none">
+                <Clock className="w-3.5 h-3.5 text-neutral-400" />
+                <span>{linkState.pendingText}</span>
+              </span>
             )}
 
-            {paper.codeUrl && (
+            {linkState.hasPdfUrl && (
+              <a
+                href={paper.pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-pill text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-all"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>PDF</span>
+              </a>
+            )}
+
+            {linkState.hasCodeUrl && (
               <a
                 href={paper.codeUrl}
                 target="_blank"
@@ -304,18 +331,24 @@ export default function ResearchPaperClient({ slug }: { slug: string }) {
               <h4 className="uppercase tracking-wider text-neutral-400">
                 Paper Artifacts
               </h4>
-              <div className="space-y-2 text-neutral-700 dark:text-neutral-300">
-                <div className="flex justify-between">
+              <div className="space-y-2.5 text-neutral-700 dark:text-neutral-300">
+                <div className="flex justify-between items-center">
                   <span className="text-neutral-500">Status:</span>
-                  <span>Published / Verified</span>
+                  <PublicationBadge status={paper.publicationStatus} />
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
+                  <span className="text-neutral-500">Publication:</span>
+                  <span className="text-right text-[11px] max-w-[170px] truncate" title={linkState.hasPaperUrl ? "Published / Open Access" : linkState.pendingText}>
+                    {linkState.hasPaperUrl ? "Published Link Available" : linkState.pendingText}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
                   <span className="text-neutral-500">Code:</span>
-                  <span>Open Source</span>
+                  <span>{linkState.hasCodeUrl ? "Open Source" : "Pending Release"}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-neutral-500">Full Text:</span>
-                  <span>Open Access</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-neutral-500">DOI / ID:</span>
+                  <span>{linkState.hasDoi ? paper.doi : "Pending"}</span>
                 </div>
               </div>
             </div>

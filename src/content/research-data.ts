@@ -18,10 +18,19 @@ export interface ResearchPaper {
   keyResults: string;
   whyItMatters: string;
   limitations: string;
+
   paperUrl?: string;
   doi?: string;
   pdfUrl?: string;
   codeUrl?: string;
+
+  publicationStatus?:
+    | "published"
+    | "accepted"
+    | "under-review"
+    | "preprint"
+    | "manuscript";
+
   citations: {
     bibtex: string;
     apa: string;
@@ -36,11 +45,12 @@ export const researchPapers: ResearchPaper[] = [
     title: "ACE-SeizNet: Deep Learning Framework for Reliable EEG-Based Seizure Detection",
     shortTitle: "ACE-SeizNet",
     authors: ["Bhaumik Patel", "Research Collaborators"],
-    venue: "Peer-reviewed Research Publication / Preprint",
+    venue: "archives of computational methods in engineering",
     date: "2026-03-15",
     readTime: "7 min read",
     category: "Healthcare AI & Biosignals",
     tags: ["EEG Analysis", "Deep Learning", "Attention Mechanisms", "Neurology AI", "Edge Deployment"],
+    publicationStatus: "under-review",
     plainSummary:
       "A novel attention-enhanced convolutional architecture that analyzes electroencephalogram (EEG) brain waves to identify epileptic seizures in real time with high noise immunity and minimal false alarms.",
     tldr:
@@ -64,127 +74,293 @@ export const researchPapers: ResearchPaper[] = [
     pdfUrl: "/content/research/ace-seiznet.pdf",
     codeUrl: "https://github.com/bhaumik611/ACE-SeizNet",
     citations: {
-      bibtex: `@article{patel2026aceseiznet,\n  title={ACE-SeizNet: Deep Learning Framework for Reliable EEG-Based Seizure Detection},\n  author={Patel, Bhaumik and Collaborators},\n  journal={IEEE Transactions on Biomedical Engineering},\n  year={2026}\n}`,
+      bibtex: `@article{patel2026aceseiznet,
+  title={ACE-SeizNet: Deep Learning Framework for Reliable EEG-Based Seizure Detection},
+  author={Patel, Bhaumik and Collaborators},
+  journal={IEEE Transactions on Biomedical Engineering},
+  year={2026}
+}`,
       apa: `Patel, B., & Collaborators. (2026). ACE-SeizNet: Deep Learning Framework for Reliable EEG-Based Seizure Detection. IEEE Transactions on Biomedical Engineering.`,
       mla: `Patel, Bhaumik, et al. "ACE-SeizNet: Deep Learning Framework for Reliable EEG-Based Seizure Detection." IEEE Transactions on Biomedical Engineering (2026).`,
       ieee: `B. Patel et al., "ACE-SeizNet: Deep Learning Framework for Reliable EEG-Based Seizure Detection," IEEE Trans. Biomed. Eng., 2026.`
     }
   },
+
   {
-    slug: "hybrid-deep-learning-kidney-disease-diagnosis",
-    title: "A Comprehensive Review of Various Hybrid Deep Learning Models for Kidney Disease Diagnosis and Classification",
-    shortTitle: "Hybrid Kidney AI Review",
-    authors: ["Bhaumik Patel", "Research Team"],
-    venue: "Journal of Medical Informatics & Bio-Imaging",
-    date: "2026-01-20",
-    readTime: "9 min read",
-    category: "Medical Diagnostics & Review",
-    tags: ["Chronic Kidney Disease", "Hybrid Neural Networks", "Clinical Decision Support", "Explainable AI"],
-    plainSummary:
-      "A systematic evaluation and benchmarking of hybrid neural architectures (combining CNNs, Vision Transformers, and tree-based ensembles) for ultrasound, CT, and tabular biomarker assessment in Chronic Kidney Disease (CKD).",
-    tldr:
-      "We synthesize 120+ recent architectures, analyze multimodal integration bottlenecks in nephrology, and propose a standardized benchmarking framework that addresses class imbalance and domain drift across diverse hospital datasets.",
-    eli12:
-      "Doctors usually have to look at both kidney scan pictures and blood test numbers separately. This paper compares all the smartest computer systems that look at both the pictures and numbers together, figuring out which systems are most trustworthy and explaining why some work better than others.",
-    problem:
-      "Most existing deep learning tools in nephrology either focus purely on imaging (CT/Ultrasound) or purely on biochemical markers (eGFR, serum creatinine, urine protein), missing synergistic diagnostic signals and failing in cross-hospital validation tests.",
-    idea:
-      "We categorize and benchmark modern hybrid pipelines: Vision-Tabular cross-attention models, CNN-BiLSTM feature extractors, and contrastive self-supervised representations across early, mid, and end-stage CKD classifications.",
-    howItWorks:
-      "1. Systematically reviewed 120+ clinical AI studies from 2020-2026 following PRISMA guidelines.\n2. Re-benchmarked top 8 open-source hybrid architectures under identical class-balanced conditions.\n3. Evaluated interpretability using Grad-CAM, SHAP, and Integrated Gradients against radiologist annotations.\n4. Identified failure modes under low-resource imaging settings.",
-    keyResults:
-      "• Hybrid vision-tabular models achieve +11.3% higher AUC-ROC over single-modality baselines.\n• Cross-attention between ultrasound textural embeddings and serum biomarkers reduced stage-3 CKD misclassifications by 31%.\n• Outlined a 6-point clinical deployment checklist for ethical, bias-free nephrology AI.",
-    whyItMatters:
-      "Provides clinicians and AI researchers with an authoritative roadmap for creating dependable, multimodality-driven decision support tools for early detection of kidney degradation before irreversible renal damage occurs.",
-    limitations:
-      "Severe scarcity of publicly available, paired longitudinal ultrasound-biomarker datasets with diverse ethnic demographics.",
-    paperUrl: "https://doi.org/10.1016/j.artmed.2026.xxxxxx",
-    doi: "10.1016/j.artmed.2026.xxxxxx",
-    pdfUrl: "/content/research/kidney-hybrid-review.pdf",
-    codeUrl: "https://github.com/bhaumik611/Kidney-AI-Bench",
-    citations: {
-      bibtex: `@article{patel2026hybridkidney,\n  title={A Comprehensive Review of Various Hybrid Deep Learning Models for Kidney Disease Diagnosis and Classification},\n  author={Patel, Bhaumik and Research Team},\n  journal={Journal of Medical Informatics & Bio-Imaging},\n  year={2026}\n}`,
-      apa: `Patel, B., & Research Team. (2026). A Comprehensive Review of Various Hybrid Deep Learning Models for Kidney Disease Diagnosis and Classification. Journal of Medical Informatics & Bio-Imaging.`,
-      mla: `Patel, Bhaumik, et al. "A Comprehensive Review of Various Hybrid Deep Learning Models for Kidney Disease Diagnosis and Classification." Journal of Medical Informatics & Bio-Imaging (2026).`,
-      ieee: `B. Patel et al., "A Comprehensive Review of Various Hybrid Deep Learning Models for Kidney Disease Diagnosis and Classification," J. Med. Inform. Bio-Imaging, 2026.`
-    }
-  },
-  {
-    slug: "cervical-cancer-attention-deep-learning",
+    slug: "cervical-cancer-imatx-net",
     title: "Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization",
-    shortTitle: "Attention-Driven Cervical AI",
-    authors: ["Bhaumik Patel", "Clinical AI Lab"],
-    venue: "International Conference on Computer Vision in Medicine (ICCVM)",
-    date: "2025-11-10",
+    shortTitle: "IMATX Net",
+    authors: [
+      "Davinder Paul Singh",
+      "Tathagat Banerjee",
+      "Dev Patel",
+      "Bhaumik Patel"
+    ],
+    venue: "archives of computational methods in engineering",
+    date: "2026",
     readTime: "8 min read",
-    category: "Pathology AI & Explainability",
-    tags: ["Pap Smear", "Attention Networks", "Explainable AI (XAI)", "Model Quantization", "Mobile Health"],
+    category: "Medical Imaging & Explainable AI",
+    tags: [
+      "Cervical Cancer",
+      "Medical Imaging",
+      "Attention Mechanisms",
+      "IMATX Net",
+      "Explainable AI",
+      "Deep Learning"
+    ],
+    publicationStatus: "under-review",
     plainSummary:
-      "An attention-guided vision framework for automated screening of Pap smear cytology images, engineered for lightweight edge deployment with pixel-level clinician-verified explainability.",
+      "A comprehensive study introducing IMATX Net, an attention-driven deep learning framework designed for cervical cancer image classification with improved feature selection, interpretability, and multi-class diagnostic performance.",
     tldr:
-      "Introduces a dual-branch spatial & channel attention network for 7-class cervical cytology classification, achieving 99.1% accuracy with 4-bit INT quantization for deployment on battery-powered mobile colposcopy hardware.",
+      "IMATX Net combines Integrated Multi-context Attention (IMA), T-blocks, and multi-scale feature refinement to improve cervical cancer classification while providing attention-based visual interpretability.",
     eli12:
-      "When checking cell samples under a microscope, finding a few unhealthy cells among thousands is like searching for a needle in a haystack. This AI puts a bright highlighter over suspicious cell shapes and nuclei, explains why it highlighted them, and works fast on a simple tablet.",
+      "Imagine thousands of cells are visible in a medical image, but only some areas contain important clues. IMATX Net works like a smart microscope that learns where to look, focuses on the most useful cell patterns, and helps show why those regions influenced its prediction.",
     problem:
-      "Cytotechnologist shortages in rural and underserved regions cause delays in cervical cancer screening. Existing large vision models are too computationally heavy for portable clinic setups and lack trustworthy visual explanations.",
+      "Cervical cancer image classification is challenging because cellular structures can be highly complex, staining conditions can vary, and visually similar abnormalities may overlap between classes. Traditional approaches may also provide limited interpretability.",
     idea:
-      "We introduce an Attention-Guided Residual Network (AG-ResNet) with an integrated gradient attribution layer and post-training dynamic quantization that compresses the model by 78% with under 0.4% accuracy loss.",
+      "The study introduces IMATX Net, combining an Integrated Multi-context Attention (IMA) module with T-blocks and multi-scale feature refinement to improve diagnostic feature selection and classification.",
     howItWorks:
-      "1. High-resolution Pap smear tiles are preprocessed with adaptive color deconvolution (H&E / Papanicolaou staining).\n2. Dual spatial-channel attention modules isolate nuclear dysplasia and abnormal cytoplasm ratios.\n3. Explainability maps are generated in real-time via Score-CAM to highlight cellular morphometry.\n4. The network is quantized into an INT4/FP16 hybrid engine for on-device mobile inference.",
+      "1. Cervical histopathological images are processed through the deep learning pipeline.\n2. Integrated Multi-context Attention focuses the network on diagnostically important regions.\n3. T-blocks perform pyramidal multi-dilated convolutional feature extraction.\n4. Refined features are passed to the multi-class classification stage.\n5. Attention visualization provides an interpretable view of the regions influencing the prediction.\n6. Ablation experiments evaluate the contribution of the major architectural components.",
     keyResults:
-      "• 99.12% 7-class classification accuracy on the SIPaKMeD benchmark dataset.\n• 78% reduction in memory footprint (from 142MB down to 31MB) allowing 45 FPS on edge ARM SoCs.\n• 94% visual overlap between AI attention maps and blinded expert pathologist annotations.",
+      "• IMATX Net achieved 97.0% sensitivity, 97.1% specificity, and 97.2% accuracy.\n• Precision reached 97.6%, with an F1-score of 97.3%.\n• The study reports improved performance compared with the benchmarked ML and DL approaches.\n• Ablation analysis showed that the IMA and T-block components contribute materially to the classification performance.",
     whyItMatters:
-      "Democratizes high-precision cervical cancer screening for rural clinics and community health workers, catching precancerous lesions (CIN-1 / CIN-2) years before malignant transformation.",
+      "The work demonstrates how attention-based feature refinement can combine strong classification performance with visual interpretability, providing a research direction for more transparent AI-assisted cervical cancer image analysis.",
     limitations:
-      "High sensitivity to extreme staining variations in legacy manual slide preparations; ongoing work integrates automated style-transfer normalization.",
-    paperUrl: "https://doi.org/10.1145/xxxxxxx.xxxxxxx",
-    doi: "10.1145/3689xxx.3689xxx",
-    pdfUrl: "/content/research/cervical-cancer-attention.pdf",
-    codeUrl: "https://github.com/bhaumik611/Cervical-Attention-XAI",
+      "The study identifies challenges related to image variability, staining differences, class imbalance, generalization, and the need for further domain adaptation and explainability research.",
+    paperUrl: "",
+    doi: "",
+    pdfUrl: "",
+    codeUrl: "",
     citations: {
-      bibtex: `@inproceedings{patel2025cervical,\n  title={Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization},\n  author={Patel, Bhaumik and Lab, Clinical AI},\n  booktitle={Proc. International Conference on Computer Vision in Medicine},\n  year={2025}\n}`,
-      apa: `Patel, B., & Clinical AI Lab. (2025). Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization. Proc. ICCVM.`,
-      mla: `Patel, Bhaumik, and Clinical AI Lab. "Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization." Proc. ICCVM (2025).`,
-      ieee: `B. Patel and Clinical AI Lab, "Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization," in Proc. ICCVM, 2025.`
+      bibtex: `@article{singh2026cervical,
+  title={Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization},
+  author={Singh, Davinder Paul and Banerjee, Tathagat and Patel, Dev and Patel, Bhaumik},
+  year={2026}
+}`,
+      apa: `Singh, D. P., Banerjee, T., Patel, D., & Patel, B. (2026). Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization.`,
+      mla: `Singh, Davinder Paul, et al. "Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization." (2026).`,
+      ieee: `D. P. Singh, T. Banerjee, D. Patel, and B. Patel, "Cervical Cancer Detection and Classification: A Comprehensive Study of Attention-Driven Deep Learning with Emphasis on Explainability and Model Optimization," 2026.`
     }
   },
+
+  {
+    slug: "renal-ct-dcant-qit-dca",
+    title: "A Comprehensive Survey on AI-Driven Renal CT Image Analysis for Kidney Abnormality Classification: Developments, Limitations, and Future Scope",
+    shortTitle: "DCANT-QIT-DCA",
+    authors: [
+      "Tathagat Banerjee",
+      "Davinder Paul Singh",
+      "Gururaja S",
+      "Ishak Pacal",
+      "Prashant Ankalkoti",
+      "Ajay PrakashPasupulla",
+      "Ram Murat Singh",
+      "Yogendra Narayan",
+      "Bhaumik Patel",
+      "Yana Vaghani"
+    ],
+    venue: "archives of computational methods in engineering",
+    date: "2026",
+    readTime: "10 min read",
+    category: "Medical Imaging & Healthcare AI",
+    tags: [
+      "Renal CT",
+      "Kidney Disease",
+      "Medical Imaging",
+      "CNN-Transformer",
+      "Explainable AI",
+      "Grad-CAM",
+      "Attention Mechanisms"
+    ],
+    publicationStatus: "accepted",
+    plainSummary:
+      "A comprehensive study of AI-driven renal CT image analysis introducing DCANT-QIT-DCA, a hybrid CNN-transformer framework for multiclass classification of normal kidneys, cysts, tumors, and stones.",
+    tldr:
+      "DCANT-QIT-DCA combines convolutional feature extraction, Quadratic Interaction Transformer modeling, Dilated Cross-Attention, and SwiGLU-based feature fusion to capture local texture and broader contextual relationships in renal CT images.",
+    eli12:
+      "Think of a kidney CT scan as a huge puzzle. Some clues are tiny details, while others only make sense when you look at distant parts of the image together. DCANT-QIT-DCA combines a system that notices tiny details with another system that understands relationships between different regions.",
+    problem:
+      "Renal CT interpretation can be time-consuming and difficult when abnormalities are subtle, multifocal, heterogeneous, or spatially separated. Conventional CNN approaches may focus strongly on local features without adequately modeling broader contextual relationships.",
+    idea:
+      "The study introduces DCANT-QIT-DCA, a hybrid architecture designed to combine local convolutional representations with higher-order contextual modeling and multi-scale cross-attention for renal abnormality classification.",
+    howItWorks:
+      "1. A convolutional backbone extracts local texture and anatomical features from renal CT images.\n2. The Quadratic Interaction Transformer models higher-order contextual relationships beyond conventional linear attention.\n3. Dilated Cross-Attention aggregates information from spatially distributed and non-contiguous regions.\n4. Cross-feature fusion combines convolutional and transformer representations using a SwiGLU-based MLP.\n5. Grad-CAM and attention visualization provide explainability of the model's predictions.\n6. The system classifies four categories: normal, cyst, tumor, and stone.",
+    keyResults:
+      "• 99.98% internal test accuracy with an AUC-ROC of 1.000 under the controlled internal evaluation setting.\n• 96.63% accuracy and 0.987 AUC-ROC on an independent external mini-validation cohort.\n• 10-fold stratified cross-validation achieved 99.95 ± 0.03% mean accuracy.\n• The model contains approximately 49.6M trainable parameters and achieves 12.0 ms/image inference on a Tesla P100 GPU.\n• INT8 quantization reduces the model size to 47.3 MB and inference time to approximately 8.2 ms/image with less than 0.1% reported accuracy drop.",
+    whyItMatters:
+      "The work explores how hybrid CNN-transformer architectures can improve renal CT abnormality classification while combining predictive performance with attention-based explainability and more comprehensive contextual feature modeling.",
+    limitations:
+      "The study highlights the need for stronger patient-level separation, larger multi-center external validation, richer clinical metadata, prospective validation, improved explainability, and evaluation across broader imaging environments before clinical deployment.",
+    paperUrl: "",
+    doi: "",
+    pdfUrl: "",
+    codeUrl: "",
+    citations: {
+      bibtex: `@article{banerjee2026renalct,
+  title={A Comprehensive Survey on AI-Driven Renal CT Image Analysis for Kidney Abnormality Classification: Developments, Limitations, and Future Scope},
+  author={Banerjee, Tathagat and Singh, Davinder Paul and Gururaja, S and Pacal, Ishak and Ankalkoti, Prashant and Pasupulla, Ajay Prakash and Singh, Ram Murat and Narayan, Yogendra and Patel, Bhaumik and Vaghani, Yana},
+  year={2026}
+}`,
+      apa: `Banerjee, T., Singh, D. P., Gururaja, S., Pacal, I., Ankalkoti, P., Pasupulla, A. P., Singh, R. M., Narayan, Y., Patel, B., & Vaghani, Y. (2026). A Comprehensive Survey on AI-Driven Renal CT Image Analysis for Kidney Abnormality Classification: Developments, Limitations, and Future Scope.`,
+      mla: `Banerjee, Tathagat, et al. "A Comprehensive Survey on AI-Driven Renal CT Image Analysis for Kidney Abnormality Classification: Developments, Limitations, and Future Scope." (2026).`,
+      ieee: `T. Banerjee et al., "A Comprehensive Survey on AI-Driven Renal CT Image Analysis for Kidney Abnormality Classification: Developments, Limitations, and Future Scope," 2026.`
+    }
+  },
+
   {
     slug: "uncertainty-aware-adaptive-llm-routing",
     title: "Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling",
     shortTitle: "Adaptive LLM Routing",
-    authors: ["Bhaumik Patel"],
-    venue: "NeurIPS / ICLR Workshop on Efficient Foundation Models",
-    date: "2025-08-18",
-    readTime: "6 min read",
-    category: "LLM Systems & Cost Optimization",
-    tags: ["LLM Routing", "Thompson Sampling", "Multi-Armed Bandits", "Latency Optimization", "Cost Efficiency"],
+    authors: ["Bhaumik Patel", "Yana Vaghani"],
+    venue: "Journal of Supercomputing",
+    date: "2026",
+    readTime: "7 min read",
+    category: "LLM Systems & Adaptive AI",
+    tags: [
+      "LLM Routing",
+      "Thompson Sampling",
+      "Contextual Bandits",
+      "Bayesian Learning",
+      "Cost Optimization",
+      "Latency Optimization"
+    ],
+    publicationStatus: "preprint",
     plainSummary:
-      "An intelligent meta-router that predicts query complexity and routes prompts across a pool of 9+ frontier and lightweight LLM backends, slashing inference cost by 64% while maintaining 98%+ task accuracy.",
+      "A Bayesian adaptive routing framework that treats LLM selection as a constrained contextual bandit problem and jointly considers model performance, computational cost, and response latency.",
     tldr:
-      "We formulate multi-LLM dispatching as a Constrained Contextual Bandit problem solved via Bayesian Thompson Sampling with semantic uncertainty estimation, ensuring strict SLA latency guarantees and cost caps.",
+      "The proposed framework uses Constrained Thompson Sampling to dynamically select among language models while balancing expected utility, cost, latency, uncertainty, and resource constraints.",
     eli12:
-      "Imagine you have a team of helpers: a world-class professor who is very expensive and slow, and several super-fast, cheap assistants. This system reads your question first, and if a fast assistant can easily solve it, it gives it to them. Only tough questions get sent to the expensive professor, saving 60%+ money without losing quality.",
+      "Imagine you have several AI assistants. One is powerful but expensive, another is fast and cheap, and another is somewhere in between. Instead of always using the same assistant, this system learns which assistant is most suitable for each question while considering both time and cost.",
     problem:
-      "Routing every prompt to frontier LLMs (e.g. GPT-4o / Claude 3.5 Sonnet) is economically unsustainable for production traffic. Conversely, static heuristics or rule-based routing fail when prompt complexity is ambiguous or when API providers experience latency spikes.",
+      "Different language models have different accuracy, cost, and latency characteristics. Static or heuristic routing strategies may fail to adapt when query characteristics and model performance vary.",
     idea:
-      "A lightweight neural router embeds prompt semantics, estimates query entropy and domain difficulty, and samples the optimal model backend using Bayesian Thompson Sampling constrained by budget and P99 latency bounds.",
+      "Adaptive LLM routing is formulated as a constrained contextual bandit problem. Bayesian uncertainty estimation through Thompson Sampling balances exploration of uncertain model choices with exploitation of models that are currently expected to perform well.",
     howItWorks:
-      "1. A quantized 35M-parameter encoder extracts contextual intent and difficulty features in <4ms.\n2. Posterior reward distributions (quality vs. latency vs. cost) are updated online via Thompson Sampling.\n3. Hard constraint filters prune LLM candidates that violate maximum tolerable latency or cost per token.\n4. Automatic fallback triggering redirects queries seamlessly if primary provider throttles or errors.",
+      "1. Each incoming query is represented as a contextual feature vector.\n2. Candidate LLMs are represented as actions with different cost and latency profiles.\n3. Expected model utility is estimated from the query context.\n4. Thompson Sampling models uncertainty over model performance.\n5. Cost and latency constraints eliminate infeasible model choices.\n6. The selected model provides feedback that updates the routing policy over time.",
     keyResults:
-      "• 64.2% reduction in overall token inference expenditures across 100,000 real-world benchmark prompts.\n• Maintains 98.7% response win-rate compared to pure frontier model baselines.\n• Sub-8ms router decision overhead with zero cold-start penalty.",
+      "• Experimental evaluation in a stochastic simulated environment shows that the proposed approach outperforms greedy and random routing baselines in cumulative regret and adaptive decision quality.\n• The formulation provides a sublinear regret analysis under the stated standard assumptions.\n• The framework jointly considers context-dependent performance, Bayesian uncertainty, cost, and latency instead of treating model selection as a static routing problem.",
     whyItMatters:
-      "Enables enterprise scale AI deployments to cut hundreds of thousands of dollars in monthly cloud API bills while improving P95 user latency and achieving high uptime resilience against provider outages.",
+      "The framework provides a principled foundation for adaptive multi-model LLM systems where quality, latency, and computational cost must be balanced under changing query conditions.",
     limitations:
-      "Requires streaming feedback signals (user upvotes or automated LLM-as-a-judge scores) for continuous online bayesian posterior tuning.",
-    paperUrl: "https://arxiv.org/abs/2508.xxxxx",
-    doi: "10.48550/arXiv.2508.xxxxx",
-    pdfUrl: "/content/research/uncertainty-llm-routing.pdf",
-    codeUrl: "https://github.com/bhaumik611/prompt-structuring",
+      "The current evaluation is based on a stochastic simulated environment. Further validation with real production traffic, real model APIs, changing provider latency, and real-world feedback signals would strengthen the practical evaluation.",
+    paperUrl: "",
+    doi: "https://doi.org/10.21203/rs.3.rs-9777047/v1",
+    pdfUrl: "",
+    codeUrl: "",
     citations: {
-      bibtex: `@article{patel2025uncertaintyrouting,\n  title={Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling},\n  author={Patel, Bhaumik},\n  journal={arXiv preprint arXiv:2508.xxxxx},\n  year={2025}\n}`,
-      apa: `Patel, B. (2025). Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling. arXiv:2508.xxxxx.`,
-      mla: `Patel, Bhaumik. "Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling." arXiv:2508.xxxxx (2025).`,
-      ieee: `B. Patel, "Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling," arXiv:2508.xxxxx, 2025.`
+      bibtex: `@article{patel2026uncertaintyrouting,
+  title={Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling},
+  author={Patel, Bhaumik and Vaghani, Yana},
+  year={2026}
+}`,
+      apa: `Patel, B., & Vaghani, Y. (2026). Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling.`,
+      mla: `Patel, Bhaumik, and Yana Vaghani. "Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling." (2026).`,
+      ieee: `B. Patel and Y. Vaghani, "Uncertainty-Aware Adaptive Routing for Large Language Models using Constrained Thompson Sampling," 2026.`
+    }
+  },
+
+  {
+    slug: "mathematical-reasoning-critique-guided-revision",
+    title: "Enhancing Mathematical Reasoning in Small Language Models Through Iterative Self-Correction and Critique-Guided Revision",
+    shortTitle: "Critique-Guided Reasoning",
+    authors: ["Bhaumik Patel", "Yana Vaghani"],
+    venue: "Research Manuscript",
+    date: "2026",
+    readTime: "8 min read",
+    category: "LLM Reasoning & Test-Time Learning",
+    tags: [
+      "Small Language Models",
+      "Mathematical Reasoning",
+      "Self-Correction",
+      "Critique-Guided Revision",
+      "Test-Time Supervision",
+      "LLM Evaluation"
+    ],
+    publicationStatus: "manuscript",
+    plainSummary:
+      "A study of how small language models use natural-language critiques to repair mathematical reasoning errors, introducing Critique Utilization Rate (CUR) as a measure of how effectively models use feedback.",
+    tldr:
+      "The study separates simple retry-based improvement from genuine critique-driven correction and evaluates how error type, critique information content, model scale, and repeated feedback affect reasoning repair.",
+    eli12:
+      "Imagine a student solving a math problem incorrectly. Asking them to try again might fix the answer simply because they got another chance. But giving them a useful explanation of what went wrong is different. This research studies whether AI models actually use that explanation or simply try again.",
+    problem:
+      "Language models frequently produce incorrect intermediate reasoning even when they possess the knowledge required to solve a problem. Repeated self-correction does not always reliably fix these errors, making it important to understand how external critiques contribute to successful reasoning repair.",
+    idea:
+      "The work treats natural-language critiques as test-time supervision and introduces Critique Utilization Rate (CUR) to distinguish genuine use of corrective information from improvements that may simply result from repeated attempts.",
+    howItWorks:
+      "1. The model first solves a mathematical problem.\n2. Incorrect solutions may be retried without additional information.\n3. A natural-language critique is then supplied to identify or explain the error.\n4. The model revises its reasoning using the critique.\n5. Accuracy, correction rate, and Critique Utilization Rate are evaluated.\n6. Additional experiments examine critique information content, error type, model scaling, and multi-round correction.",
+    keyResults:
+      "• On a 400-problem GSM8K subset, accuracy increased from 95.00% initially to 96.75% after retry and 97.25% after critique-guided revision.\n• Unresolved errors decreased from 20 initially to 13 after retry and 11 after revision.\n• 7 of the 9 total corrected problems were fixed during retry, while 2 were fixed during critique-guided revision.\n• In the critique-content ablation, Minimal, Error-Type, and Full Critique conditions achieved correction rates of 15.38%, 15.38%, and 7.69%, respectively, indicating that more critique information did not automatically produce more corrections.",
+    whyItMatters:
+      "The study shifts attention from simply asking whether self-correction improves accuracy toward understanding whether language models genuinely extract, interpret, and apply corrective information during inference.",
+    limitations:
+      "The study uses a limited evaluation subset and relatively small error pools for some error categories. The reported differences therefore require larger-scale experiments before broader conclusions can be established.",
+    paperUrl: "",
+    doi: "",
+    pdfUrl: "",
+    codeUrl: "",
+    citations: {
+      bibtex: `@article{patel2026mathematicalreasoning,
+  title={Enhancing Mathematical Reasoning in Small Language Models Through Iterative Self-Correction and Critique-Guided Revision},
+  author={Patel, Bhaumik and Vaghani, Yana},
+  year={2026}
+}`,
+      apa: `Patel, B., & Vaghani, Y. (2026). Enhancing Mathematical Reasoning in Small Language Models Through Iterative Self-Correction and Critique-Guided Revision.`,
+      mla: `Patel, Bhaumik, and Yana Vaghani. "Enhancing Mathematical Reasoning in Small Language Models Through Iterative Self-Correction and Critique-Guided Revision." (2026).`,
+      ieee: `B. Patel and Y. Vaghani, "Enhancing Mathematical Reasoning in Small Language Models Through Iterative Self-Correction and Critique-Guided Revision," 2026.`
+    }
+  },
+
+  {
+    slug: "semantic-utility-aware-cognitive-orchestration",
+    title: "Semantic Utility-Aware Cognitive Orchestration for Hierarchical AI Inference in AI-RAN Enabled AI-Native 6G Networks",
+    shortTitle: "SUCO Framework",
+    authors: ["Bhaumik Patel", "Yana Vaghani"],
+    venue: "Research Manuscript",
+    date: "2026",
+    readTime: "9 min read",
+    category: "AI-RAN, 6G & Distributed Intelligence",
+    tags: [
+      "AI-RAN",
+      "AI-Native 6G",
+      "Semantic Utility",
+      "Cognitive Orchestration",
+      "Edge AI",
+      "LLM Systems",
+      "Contextual Bandits"
+    ],
+    publicationStatus: "manuscript",
+    plainSummary:
+      "A semantic utility-aware orchestration framework for dynamically assigning AI inference tasks across AI-RAN Small Language Models, Edge LLMs, and Cloud LLMs in AI-native 6G networks.",
+    tldr:
+      "SUCO combines semantic importance, inference confidence, task complexity, network conditions, and resource availability to select the most appropriate inference layer instead of relying only on latency or resource metrics.",
+    eli12:
+      "Imagine a delivery system with three vehicles: a bicycle nearby, a car a little farther away, and a large truck far away. You would not use the truck for every delivery. SUCO works similarly for AI: simple tasks can stay near the user, while difficult or important tasks can be sent to stronger edge or cloud AI systems.",
+    problem:
+      "Existing hierarchical AI orchestration approaches often focus on communication and computing metrics such as latency, bandwidth, and resource utilization without adequately considering the semantic importance and complexity of the task.",
+    idea:
+      "The proposed Semantic Utility-Aware Cognitive Orchestration framework evaluates semantic importance, inference confidence, task complexity, network conditions, and computational resource availability when selecting between AI-RAN SLMs, Edge LLMs, and Cloud LLMs.",
+    howItWorks:
+      "1. An incoming AI task is analyzed for semantic and operational characteristics.\n2. A Semantic Utility Computation mechanism estimates the value and requirements of the task.\n3. The Cognitive Orchestrator evaluates available AI-RAN, edge, and cloud execution layers.\n4. The most appropriate execution layer is selected according to semantic utility and system constraints.\n5. Execution feedback is collected from the selected layer.\n6. An online contextual bandit mechanism updates orchestration policies as network and workload conditions change.",
+    keyResults:
+      "• The proposed framework is evaluated through a simulation-based evaluation framework.\n• The evaluation considers latency, resource usage, execution quality, and orchestration efficiency.\n• The framework integrates semantic utility, contextual adaptation, hierarchical inference, and AI-RAN/edge/cloud execution within a unified orchestration approach.\n• The paper positions semantic utility as an additional criterion for intelligence allocation in hierarchical AI-native 6G systems.",
+    whyItMatters:
+      "The framework provides a research direction for allocating AI intelligence according to what a task actually needs, rather than making inference-placement decisions solely from network or computational conditions.",
+    limitations:
+      "The current evaluation is simulation-based. Further work is required to validate the framework in real AI-RAN deployments, heterogeneous edge environments, and large-scale dynamic network conditions.",
+    paperUrl: "",
+    doi: "",
+    pdfUrl: "",
+    codeUrl: "",
+    citations: {
+      bibtex: `@article{patel2026suco,
+  title={Semantic Utility-Aware Cognitive Orchestration for Hierarchical AI Inference in AI-RAN Enabled AI-Native 6G Networks},
+  author={Patel, Bhaumik and Vaghani, Yana},
+  year={2026}
+}`,
+      apa: `Patel, B., & Vaghani, Y. (2026). Semantic Utility-Aware Cognitive Orchestration for Hierarchical AI Inference in AI-RAN Enabled AI-Native 6G Networks.`,
+      mla: `Patel, Bhaumik, and Yana Vaghani. "Semantic Utility-Aware Cognitive Orchestration for Hierarchical AI Inference in AI-RAN Enabled AI-Native 6G Networks." (2026).`,
+      ieee: `B. Patel and Y. Vaghani, "Semantic Utility-Aware Cognitive Orchestration for Hierarchical AI Inference in AI-RAN Enabled AI-Native 6G Networks," 2026.`
     }
   }
 ];

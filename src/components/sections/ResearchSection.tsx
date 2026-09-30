@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
   BookOpen,
   Clock,
@@ -11,16 +12,19 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  CheckCircle2,
   FileText,
-  GraduationCap,
+  ArrowRight,
 } from "lucide-react";
 import { GithubIcon } from "@/components/ui/Icons";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { CiteModal } from "@/components/research/CiteModal";
 import { ExplainLike12Toggle } from "@/components/research/ExplainLike12Toggle";
-import { researchPapers, ResearchPaper } from "@/content/research-data";
+import {
+  PublicationBadge,
+  getResearchLinkState,
+} from "@/components/research/PublicationStatus";
+import { researchPapers } from "@/content/research-data";
 import { formatDate } from "@/lib/utils";
 
 export function ResearchSection() {
@@ -30,6 +34,7 @@ export function ResearchSection() {
   const [viewMode, setViewMode] = useState<"showcase" | "list">("showcase");
 
   const activePaper = researchPapers[activePaperIndex] || researchPapers[0];
+  const activeLinkState = getResearchLinkState(activePaper);
 
   const handleNext = () => {
     setActivePaperIndex((prev) => (prev + 1) % researchPapers.length);
@@ -82,8 +87,8 @@ export function ResearchSection() {
 
       {viewMode === "showcase" ? (
         <div className="space-y-6">
-          {/* Quick Horizontal Paper Selector Pills */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+          {/* Quick Paper Selector Pills */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {researchPapers.map((paper, idx) => {
               const isSelected = idx === activePaperIndex;
 
@@ -97,7 +102,7 @@ export function ResearchSection() {
                   }}
                   className={`p-3 rounded-2xl text-left transition-all border ${
                     isSelected
-                      ? "bg-white dark:bg-neutral-900 border-neutral-500 dark:border-neutral-500 shadow-md scale-[1.02]"
+                      ? "bg-white dark:bg-neutral-900 border-neutral-500 dark:border-neutral-500 shadow-md scale-[1.01]"
                       : "glass-pill border-neutral-200/60 dark:border-neutral-800/60 text-neutral-600 dark:text-neutral-400 hover:bg-white/80 dark:hover:bg-neutral-900/80"
                   }`}
                 >
@@ -105,9 +110,7 @@ export function ResearchSection() {
                     <span className="text-[10px] font-mono text-neutral-400 uppercase truncate">
                       {paper.category}
                     </span>
-                    <span className="text-[10px] font-mono text-neutral-500 shrink-0">
-                      {paper.readTime}
-                    </span>
+                    <PublicationBadge status={paper.publicationStatus} />
                   </div>
                   <div className="text-xs font-bold text-neutral-950 dark:text-neutral-50 line-clamp-1">
                     {paper.shortTitle || paper.title}
@@ -131,19 +134,31 @@ export function ResearchSection() {
                   <div>
                     {/* Top Action Bar */}
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                      <ExplainLike12Toggle isEli12={isEli12} onToggle={setIsEli12} />
+                      <div className="flex items-center gap-3">
+                        <ExplainLike12Toggle isEli12={isEli12} onToggle={setIsEli12} />
+                        <PublicationBadge status={activePaper.publicationStatus} />
+                      </div>
 
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setCiteModalOpen(true)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-pill text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-transform"
-                        >
-                          <Quote className="w-3.5 h-3.5" />
-                          <span>Cite Paper</span>
-                        </button>
+                      <div className="flex flex-wrap items-center gap-2">
+                        {/* Only clickable when URL exists */}
+                        {activeLinkState.hasPaperUrl ? (
+                          <a
+                            href={activePaper.paperUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-pill text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-transform"
+                          >
+                            <span>Paper</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-pill text-xs font-mono text-neutral-500 dark:text-neutral-400 select-none">
+                            <Clock className="w-3 h-3 text-neutral-400" />
+                            <span>{activeLinkState.pendingText}</span>
+                          </span>
+                        )}
 
-                        {activePaper.codeUrl && (
+                        {activeLinkState.hasCodeUrl && (
                           <a
                             href={activePaper.codeUrl}
                             target="_blank"
@@ -154,6 +169,23 @@ export function ResearchSection() {
                             <GithubIcon className="w-3.5 h-3.5" />
                           </a>
                         )}
+
+                        <button
+                          type="button"
+                          onClick={() => setCiteModalOpen(true)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-pill text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-transform"
+                        >
+                          <Quote className="w-3.5 h-3.5" />
+                          <span>Cite</span>
+                        </button>
+
+                        <Link
+                          href={`/research/${activePaper.slug}`}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-black text-white dark:bg-white dark:text-black text-xs font-medium hover:scale-105 transition-transform shadow-xs"
+                        >
+                          <span>Breakdown</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
                       </div>
                     </div>
 
@@ -229,49 +261,67 @@ export function ResearchSection() {
       ) : (
         /* List Mode for fast scanning */
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {researchPapers.map((paper, idx) => (
-            <GlassCard
-              key={paper.slug}
-              tilt={true}
-              spotlight={true}
-              className="p-6 flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3 text-xs font-mono text-neutral-400">
-                  <span className="px-2.5 py-0.5 rounded-full glass-pill text-[10px] text-neutral-700 dark:text-neutral-300">
-                    {paper.category}
+          {researchPapers.map((paper, idx) => {
+            const linkState = getResearchLinkState(paper);
+
+            return (
+              <GlassCard
+                key={paper.slug}
+                tilt={true}
+                spotlight={true}
+                className="p-6 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-neutral-400 gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full glass-pill text-[10px] text-neutral-700 dark:text-neutral-300">
+                        {paper.category}
+                      </span>
+                      <PublicationBadge status={paper.publicationStatus} />
+                    </div>
+                    <span>{paper.readTime}</span>
+                  </div>
+
+                  <h3 className="text-lg font-bold tracking-tight text-neutral-950 dark:text-neutral-50 mb-1.5">
+                    {paper.title}
+                  </h3>
+
+                  <div className="text-xs font-mono text-neutral-500 mb-3">
+                    {paper.venue}
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-3">
+                    {paper.plainSummary}
+                  </p>
+                </div>
+
+                <div className="mt-5 pt-3 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between text-xs font-mono">
+                  <span className="text-neutral-400">
+                    {linkState.hasPaperUrl ? formatDate(paper.date) : linkState.pendingText}
                   </span>
-                  <span>{paper.readTime}</span>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActivePaperIndex(idx);
+                        setViewMode("showcase");
+                      }}
+                      className="hover:text-black dark:hover:text-white underline font-semibold"
+                    >
+                      Focus
+                    </button>
+                    <Link
+                      href={`/research/${paper.slug}`}
+                      className="inline-flex items-center gap-1 text-neutral-900 dark:text-neutral-100 font-semibold hover:underline"
+                    >
+                      <span>Breakdown</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
                 </div>
-
-                <h3 className="text-lg font-bold tracking-tight text-neutral-950 dark:text-neutral-50 mb-1.5">
-                  {paper.title}
-                </h3>
-
-                <div className="text-xs font-mono text-neutral-500 mb-3">
-                  {paper.venue}
-                </div>
-
-                <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed line-clamp-3">
-                  {paper.plainSummary}
-                </p>
-              </div>
-
-              <div className="mt-5 pt-3 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between text-xs font-mono text-neutral-400">
-                <span>{formatDate(paper.date)}</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActivePaperIndex(idx);
-                    setViewMode("showcase");
-                  }}
-                  className="hover:text-black dark:hover:text-white underline font-semibold"
-                >
-                  View Details
-                </button>
-              </div>
-            </GlassCard>
-          ))}
+              </GlassCard>
+            );
+          })}
         </div>
       )}
 

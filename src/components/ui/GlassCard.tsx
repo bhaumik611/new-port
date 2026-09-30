@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 interface GlassCardProps {
@@ -16,84 +15,89 @@ interface GlassCardProps {
 export function GlassCard({
   children,
   className,
-  tilt = true,
+  tilt = false,
   spotlight = true,
   onClick,
   as: Component = "div",
 }: GlassCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+  const rafRef = useRef<number | null>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const card = cardRef.current;
 
-    setMousePos({ x, y });
+    // Use requestAnimationFrame to prevent layout thrashing and avoid React re-renders
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
+    rafRef.current = requestAnimationFrame(() => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+
+      if (tilt) {
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rX = ((y - centerY) / centerY) * -4;
+        const rY = ((x - centerX) / centerX) * 4;
+        card.style.setProperty("--rotate-x", `${rX}deg`);
+        card.style.setProperty("--rotate-y", `${rY}deg`);
+      }
+    });
+  }, [tilt]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (!cardRef.current) return;
+    cardRef.current.style.setProperty("--card-hover", "1");
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!cardRef.current) return;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    const card = cardRef.current;
+    card.style.setProperty("--card-hover", "0");
     if (tilt) {
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rX = ((y - centerY) / centerY) * -5;
-      const rY = ((x - centerX) / centerX) * 5;
-      setRotateX(rX);
-      setRotateY(rY);
+      card.style.setProperty("--rotate-x", "0deg");
+      card.style.setProperty("--rotate-y", "0deg");
     }
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setRotateX(0);
-    setRotateY(0);
-  };
+  }, [tilt]);
 
   return (
-    <motion.div
+    <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       style={{
-        transformStyle: "preserve-3d",
-      }}
-      animate={{
-        rotateX: tilt && isHovered ? rotateX : 0,
-        rotateY: tilt && isHovered ? rotateY : 0,
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 30,
+        transform: tilt
+          ? "perspective(800px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg))"
+          : undefined,
+        transition: "transform 0.15s ease-out, border-color 0.2s ease, box-shadow 0.2s ease",
       }}
       className={cn(
-        "glass-panel relative overflow-hidden rounded-3xl p-6 sm:p-8",
+        "glass-panel relative overflow-hidden rounded-3xl p-6 sm:p-8 transform-gpu will-change-transform",
         onClick && "cursor-pointer",
         className
       )}
     >
-      {/* Spotlight cursor tracking overlay */}
+      {/* Hardware-accelerated Spotlight cursor tracking overlay */}
       {spotlight && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-300"
+          className="pointer-events-none absolute -inset-px rounded-3xl transition-opacity duration-200"
           style={{
-            opacity: isHovered ? 1 : 0,
-            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, var(--spotlight-color), transparent 80%)`,
+            opacity: "var(--card-hover, 0)",
+            background: `radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--spotlight-color), transparent 80%)`,
           }}
         />
       )}
 
       {/* Card Content */}
       <div className="relative z-10">{children}</div>
-    </motion.div>
+    </div>
   );
 }
