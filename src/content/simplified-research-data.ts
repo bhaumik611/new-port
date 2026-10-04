@@ -14,6 +14,13 @@ export interface SimplifiedPaper {
   howItWorksSimply: string;
   whyItMattersToday: string;
   originalPaperUrl: string;
+  doi: string;
+  citations: {
+    bibtex: string;
+    apa: string;
+    mla: string;
+    ieee: string;
+  };
 }
 
 export const simplifiedResearchPapers: SimplifiedPaper[] = [
@@ -26,6 +33,7 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     category: "Transformers & Attention",
     tags: ["Transformers", "Self-Attention", "NLP", "Foundation Models"],
     readTime: "7 min read",
+    doi: "10.48550/arXiv.1706.03762",
     plainEnglishSummary:
       "The landmark paper that replaced sequential recurrent neural networks (RNNs/LSTMs) with pure Self-Attention, allowing models to process all words in parallel and ushering in the era of ChatGPT and modern LLMs.",
     eli12:
@@ -39,6 +47,19 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     whyItMattersToday:
       "Every major foundation model today (GPT-4o, Claude 3.5 Sonnet, Gemini 1.5, LLaMA 3, BERT, Whisper, Stable Diffusion) is built on the Transformer architecture introduced in this paper.",
     originalPaperUrl: "https://arxiv.org/abs/1706.03762",
+    citations: {
+      bibtex: `@inproceedings{vaswani2017attention,
+  title={Attention is All you Need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, {\\L}ukasz and Polosukhin, Illia},
+  booktitle={Advances in Neural Information Processing Systems},
+  volume={30},
+  year={2017},
+  doi={10.48550/arXiv.1706.03762}
+}`,
+      apa: `Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). Attention is all you need. Advances in Neural Information Processing Systems, 30. https://doi.org/10.48550/arXiv.1706.03762`,
+      mla: `Vaswani, Ashish, et al. "Attention is all you need." Advances in Neural Information Processing Systems 30 (2017). https://doi.org/10.48550/arXiv.1706.03762`,
+      ieee: `A. Vaswani et al., "Attention is all you need," in Advances in Neural Information Processing Systems, vol. 30, 2017, doi: 10.48550/arXiv.1706.03762.`
+    }
   },
   {
     slug: "direct-preference-optimization-simplified",
@@ -49,6 +70,7 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     category: "Alignment & RLHF",
     tags: ["DPO", "RLHF", "LLM Alignment", "Optimization", "Stanford"],
     readTime: "6 min read",
+    doi: "10.48550/arXiv.2305.18290",
     plainEnglishSummary:
       "How Stanford researchers mathematically eliminated the unstable 4-model reinforcement learning loop (PPO) by proving that the language model itself can act as its own reward function.",
     eli12:
@@ -62,6 +84,20 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     whyItMattersToday:
       "DPO has become the primary post-training alignment method for open-weight models including Zephyr, Mistral, LLaMA-3 Instruct, and Qwen, enabling fast, stable alignment without complex RL engineering.",
     originalPaperUrl: "https://arxiv.org/abs/2305.18290",
+    citations: {
+      bibtex: `@inproceedings{rafailov2023direct,
+  title={Direct Preference Optimization: Your Language Model is Secretly a Reward Model},
+  author={Rafailov, Rafael and Sharma, Archit and Mitchell, Eric and Manning, Christopher D and Ermon, Stefano and Finn, Chelsea},
+  booktitle={Advances in Neural Information Processing Systems},
+  volume={36},
+  pages={53728--53741},
+  year={2023},
+  doi={10.48550/arXiv.2305.18290}
+}`,
+      apa: `Rafailov, R., Sharma, A., Mitchell, E., Manning, C. D., Ermon, S., & Finn, C. (2023). Direct preference optimization: Your language model is secretly a reward model. Advances in Neural Information Processing Systems, 36, 53728-53741. https://doi.org/10.48550/arXiv.2305.18290`,
+      mla: `Rafailov, Rafael, et al. "Direct preference optimization: Your language model is secretly a reward model." Advances in Neural Information Processing Systems 36 (2023): 53728-53741. https://doi.org/10.48550/arXiv.2305.18290`,
+      ieee: `R. Rafailov, A. Sharma, E. Mitchell, C. D. Manning, S. Ermon, and C. Finn, "Direct preference optimization: Your language model is secretly a reward model," in Adv. Neural Inf. Process. Syst., vol. 36, pp. 53728–53741, 2023, doi: 10.48550/arXiv.2305.18290.`
+    }
   },
   {
     slug: "flashattention-io-aware-exact-attention-simplified",
@@ -72,6 +108,7 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     category: "Hardware Acceleration",
     tags: ["FlashAttention", "GPU Acceleration", "CUDA", "Efficiency", "Memory Optimization"],
     readTime: "8 min read",
+    doi: "10.48550/arXiv.2205.14135",
     plainEnglishSummary:
       "A breakthrough in GPU algorithm design that makes Transformer self-attention 2x-4x faster and memory-efficient by computing attention in SRAM tiles and avoiding slow GPU HBM memory read/writes.",
     eli12:
@@ -85,6 +122,20 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     whyItMattersToday:
       "FlashAttention enabled modern 128k+ context windows in LLaMA-3, Mistral, and Claude, and is integrated natively into PyTorch 2.0 (`scaled_dot_product_attention`) and HuggingFace Transformers.",
     originalPaperUrl: "https://arxiv.org/abs/2205.14135",
+    citations: {
+      bibtex: `@inproceedings{dao2022flashattention,
+  title={FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness},
+  author={Dao, Tri and Fu, Daniel Y and Ermon, Stefano and Rudra, Atri and R{\\'e}, Christopher},
+  booktitle={Advances in Neural Information Processing Systems},
+  volume={35},
+  pages={16344--16359},
+  year={2022},
+  doi={10.48550/arXiv.2205.14135}
+}`,
+      apa: `Dao, T., Fu, D. Y., Ermon, S., Rudra, A., & Ré, C. (2022). FlashAttention: Fast and memory-efficient exact attention with IO-awareness. Advances in Neural Information Processing Systems, 35, 16344-16359. https://doi.org/10.48550/arXiv.2205.14135`,
+      mla: `Dao, Tri, et al. "FlashAttention: Fast and memory-efficient exact attention with IO-awareness." Advances in Neural Information Processing Systems 35 (2022): 16344-16359. https://doi.org/10.48550/arXiv.2205.14135`,
+      ieee: `T. Dao, D. Y. Fu, S. Ermon, A. Rudra, and C. Ré, "FlashAttention: Fast and memory-efficient exact attention with IO-awareness," in Adv. Neural Inf. Process. Syst., vol. 35, pp. 16344–16359, 2022, doi: 10.48550/arXiv.2205.14135.`
+    }
   },
   {
     slug: "mixture-of-experts-sparse-activation-simplified",
@@ -95,6 +146,7 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     category: "Sparse Architectures",
     tags: ["MoE", "Sparse Models", "Mixtral", "GPT-4", "Efficiency"],
     readTime: "7 min read",
+    doi: "10.48550/arXiv.1701.06538",
     plainEnglishSummary:
       "How sparse Mixture-of-Experts (MoE) architectures allow AI models to contain hundreds of billions of parameters while only activating a tiny subset per token, delivering flagship intelligence at fraction of the compute cost.",
     eli12:
@@ -108,5 +160,17 @@ export const simplifiedResearchPapers: SimplifiedPaper[] = [
     whyItMattersToday:
       "Mixture-of-Experts powers flagship foundation models including GPT-4 (widely reported to be an 8x220B MoE), Mixtral 8x7B / 8x22B, and DeepSeek-V2/V3, allowing massive reasoning capacity at the inference speed of much smaller models.",
     originalPaperUrl: "https://arxiv.org/abs/1701.06538",
+    citations: {
+      bibtex: `@inproceedings{shazeer2017outrageously,
+  title={Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer},
+  author={Shazeer, Noam and Mirhoseini, Azalia and Maziarz, Krzysztof and Davis, Andy and Le, Quoc and Hinton, Geoffrey and Dean, Jeff},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2017},
+  doi={10.48550/arXiv.1701.06538}
+}`,
+      apa: `Shazeer, N., Mirhoseini, A., Maziarz, K., Davis, A., Le, Q., Hinton, G., & Dean, J. (2017). Outrageously large neural networks: The sparsely-gated mixture-of-experts layer. International Conference on Learning Representations (ICLR). https://doi.org/10.48550/arXiv.1701.06538`,
+      mla: `Shazeer, Noam, et al. "Outrageously large neural networks: The sparsely-gated mixture-of-experts layer." International Conference on Learning Representations (ICLR) (2017). https://doi.org/10.48550/arXiv.1701.06538`,
+      ieee: `N. Shazeer et al., "Outrageously large neural networks: The sparsely-gated mixture-of-experts layer," in Int. Conf. Learn. Represent. (ICLR), 2017, doi: 10.48550/arXiv.1701.06538.`
+    }
   }
 ];

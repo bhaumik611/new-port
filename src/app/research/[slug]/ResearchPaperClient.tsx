@@ -116,14 +116,16 @@ export default function ResearchPaperClient({ slug }: { slug: string }) {
           <ExplainLike12Toggle isEli12={isEli12} onToggle={setIsEli12} />
 
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setCiteModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-pill text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-all"
-            >
-              <Quote className="w-3.5 h-3.5" />
-              <span>Cite Paper</span>
-            </button>
+            {linkState.canCite && (
+              <button
+                type="button"
+                onClick={() => setCiteModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-pill text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-all"
+              >
+                <Quote className="w-3.5 h-3.5" />
+                <span>Cite Paper</span>
+              </button>
+            )}
 
             {linkState.hasPaperUrl ? (
               <a

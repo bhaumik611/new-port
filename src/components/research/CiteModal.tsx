@@ -3,10 +3,19 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Copy, Check, Quote } from "lucide-react";
-import { ResearchPaper } from "@/content/research-data";
+export interface CiteablePaper {
+  title: string;
+  doi?: string;
+  citations: {
+    bibtex: string;
+    apa: string;
+    mla: string;
+    ieee: string;
+  };
+}
 
 interface CiteModalProps {
-  paper: ResearchPaper;
+  paper: CiteablePaper;
   isOpen: boolean;
   onClose: () => void;
 }

@@ -11,14 +11,17 @@ import {
   ExternalLink,
   Sparkles,
   BookOpen,
+  Quote,
 } from "lucide-react";
 import { simplifiedResearchPapers, SimplifiedPaper } from "@/content/simplified-research-data";
 import { ExplainLike12Toggle } from "@/components/research/ExplainLike12Toggle";
+import { CiteModal } from "@/components/research/CiteModal";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 export default function SimplifiedPaperClient({ slug }: { slug: string }) {
   const paper = simplifiedResearchPapers.find((p) => p.slug === slug);
   const [isEli12, setIsEli12] = useState(false);
+  const [citeModalOpen, setCiteModalOpen] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
 
   if (!paper) {
@@ -37,6 +40,10 @@ export default function SimplifiedPaperClient({ slug }: { slug: string }) {
       setTimeout(() => setShareCopied(false), 2000);
     }
   };
+
+  const formattedDoiUrl = paper.doi.startsWith("http")
+    ? paper.doi
+    : `https://doi.org/${paper.doi}`;
 
   return (
     <div className="pt-28 pb-24 px-4 sm:px-6 max-w-5xl mx-auto min-h-screen">
@@ -81,13 +88,35 @@ export default function SimplifiedPaperClient({ slug }: { slug: string }) {
             <strong className="text-neutral-800 dark:text-neutral-200">Published At:</strong>{" "}
             {paper.originalVenue}
           </div>
+          {paper.doi && (
+            <div>
+              <strong className="text-neutral-800 dark:text-neutral-200">DOI:</strong>{" "}
+              <a
+                href={formattedDoiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-black dark:hover:text-white transition-colors"
+              >
+                {paper.doi}
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Action controls */}
         <div className="pt-2 flex flex-wrap items-center justify-between gap-4">
           <ExplainLike12Toggle isEli12={isEli12} onToggle={setIsEli12} />
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setCiteModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-pill text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-all"
+            >
+              <Quote className="w-3.5 h-3.5" />
+              <span>Cite Paper</span>
+            </button>
+
             <a
               href={paper.originalPaperUrl}
               target="_blank"
@@ -97,6 +126,18 @@ export default function SimplifiedPaperClient({ slug }: { slug: string }) {
               <span>Read Original on arXiv</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
+
+            {paper.doi && (
+              <a
+                href={formattedDoiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-pill text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-all"
+              >
+                <span>DOI</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            )}
 
             <button
               type="button"
@@ -200,6 +241,12 @@ export default function SimplifiedPaperClient({ slug }: { slug: string }) {
           )}
         </div>
       </div>
+
+      <CiteModal
+        paper={paper}
+        isOpen={citeModalOpen}
+        onClose={() => setCiteModalOpen(false)}
+      />
     </div>
   );
 }

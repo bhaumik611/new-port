@@ -69,8 +69,8 @@ export const researchPapers: ResearchPaper[] = [
       "Enables continuous real-time ICU monitoring and wearable alert devices for patients with refractory epilepsy, drastically reducing response times for medical intervention during status epilepticus.",
     limitations:
       "Requires minimal initial baseline calibration for unseen pediatric montages; future work focuses on zero-shot domain adaptation across diverse international electrode configurations.",
-    paperUrl: "https://arxiv.org/abs/2403.xxxxx",
-    doi: "10.1109/TBME.2026.xxxxxxx",
+    paperUrl: "",
+    doi: "",
     pdfUrl: "/content/research/ace-seiznet.pdf",
     codeUrl: "https://github.com/bhaumik611/ACE-SeizNet",
     citations: {
@@ -243,8 +243,8 @@ export const researchPapers: ResearchPaper[] = [
       "The framework provides a principled foundation for adaptive multi-model LLM systems where quality, latency, and computational cost must be balanced under changing query conditions.",
     limitations:
       "The current evaluation is based on a stochastic simulated environment. Further validation with real production traffic, real model APIs, changing provider latency, and real-world feedback signals would strengthen the practical evaluation.",
-    paperUrl: "",
-    doi: "https://doi.org/10.21203/rs.3.rs-9777047/v1",
+    paperUrl: "https://doi.org/10.21203/rs.3.rs-9777047/v1",
+    doi: "10.21203/rs.3.rs-9777047/v1",
     pdfUrl: "",
     codeUrl: "",
     citations: {

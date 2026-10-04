@@ -18,12 +18,14 @@ import {
 import { GlassCard } from "@/components/ui/GlassCard";
 import { blogPosts, BlogPost } from "@/content/blog-data";
 import { simplifiedResearchPapers, SimplifiedPaper } from "@/content/simplified-research-data";
+import { CiteModal } from "@/components/research/CiteModal";
 import { formatDate } from "@/lib/utils";
 
 export default function EditorialAndResearchHubPage() {
   const [activeTab, setActiveTab] = useState<"blog" | "simplified-research">("blog");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [citePaper, setCitePaper] = useState<SimplifiedPaper | null>(null);
 
   const blogCategories = ["All", "AI Engineering", "LLM Architecture", "Edge Systems", "Startups & IP"];
   const researchCategories = ["All", "Transformers & Attention", "Alignment & RLHF", "Hardware Acceleration", "Sparse Architectures"];
@@ -218,8 +220,13 @@ export default function EditorialAndResearchHubPage() {
                   {paper.title}
                 </h3>
 
-                <div className="mt-1 text-xs font-mono text-neutral-500">
-                  {paper.originalAuthors} • <span className="italic">{paper.originalVenue}</span>
+                <div className="mt-1 text-xs font-mono text-neutral-500 flex flex-wrap items-center gap-x-2">
+                  <span>{paper.originalAuthors} • <span className="italic">{paper.originalVenue}</span></span>
+                  {paper.doi && (
+                    <span className="text-neutral-400">
+                      (DOI: {paper.doi})
+                    </span>
+                  )}
                 </div>
 
                 <p className="mt-3 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
@@ -237,16 +244,27 @@ export default function EditorialAndResearchHubPage() {
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-neutral-200/60 dark:border-neutral-800/60 flex items-center justify-between">
-                <a
-                  href={paper.originalPaperUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-mono text-neutral-500 hover:text-black dark:hover:text-white"
-                >
-                  <span>Original Paper</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
+              <div className="mt-6 pt-4 border-t border-neutral-200/60 dark:border-neutral-800/60 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setCitePaper(paper)}
+                    className="inline-flex items-center gap-1 text-xs font-mono text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
+                  >
+                    <Quote className="w-3 h-3" />
+                    <span>Cite</span>
+                  </button>
+
+                  <a
+                    href={paper.originalPaperUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-mono text-neutral-500 hover:text-black dark:hover:text-white"
+                  >
+                    <span>Original Paper</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
 
                 <Link
                   href={`/research-simplified/${paper.slug}`}
@@ -259,6 +277,14 @@ export default function EditorialAndResearchHubPage() {
             </GlassCard>
           ))}
         </div>
+      )}
+
+      {citePaper && (
+        <CiteModal
+          paper={citePaper}
+          isOpen={Boolean(citePaper)}
+          onClose={() => setCitePaper(null)}
+        />
       )}
     </div>
   );

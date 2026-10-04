@@ -8,10 +8,23 @@ export interface ResearchLinkState {
   hasPdfUrl: boolean;
   hasCodeUrl: boolean;
   hasAnyLink: boolean;
+  canCite: boolean;
   statusLabel: string;
   pendingText: string;
   badgeText: string;
   badgeVariant: "accepted" | "published" | "under-review" | "preprint" | "manuscript";
+}
+
+export function canShowCitation(paper: ResearchPaper): boolean {
+  const hasDoi = Boolean(paper.doi && paper.doi.trim() !== "");
+  const status =
+    paper.publicationStatus ||
+    (paper.venue.toLowerCase().includes("accepted")
+      ? "accepted"
+      : paper.venue.toLowerCase().includes("preprint")
+      ? "preprint"
+      : "manuscript");
+  return status === "published" || (status === "preprint" && hasDoi);
 }
 
 export function getResearchLinkState(paper: ResearchPaper): ResearchLinkState {
@@ -28,6 +41,8 @@ export function getResearchLinkState(paper: ResearchPaper): ResearchLinkState {
       : paper.venue.toLowerCase().includes("preprint")
       ? "preprint"
       : "manuscript");
+
+  const canCite = status === "published" || (status === "preprint" && hasDoi);
 
   let badgeText = "Research Manuscript";
   let badgeVariant: ResearchLinkState["badgeVariant"] = "manuscript";
@@ -61,6 +76,7 @@ export function getResearchLinkState(paper: ResearchPaper): ResearchLinkState {
     hasPdfUrl,
     hasCodeUrl,
     hasAnyLink,
+    canCite,
     statusLabel: badgeText,
     pendingText,
     badgeText,

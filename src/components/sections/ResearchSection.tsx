@@ -170,14 +170,16 @@ export function ResearchSection() {
                           </a>
                         )}
 
-                        <button
-                          type="button"
-                          onClick={() => setCiteModalOpen(true)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-pill text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-transform"
-                        >
-                          <Quote className="w-3.5 h-3.5" />
-                          <span>Cite</span>
-                        </button>
+                        {activeLinkState.canCite && (
+                          <button
+                            type="button"
+                            onClick={() => setCiteModalOpen(true)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-pill text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:scale-105 transition-transform"
+                          >
+                            <Quote className="w-3.5 h-3.5" />
+                            <span>Cite</span>
+                          </button>
+                        )}
 
                         <Link
                           href={`/research/${activePaper.slug}`}
