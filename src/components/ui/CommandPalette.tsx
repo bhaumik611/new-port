@@ -64,7 +64,7 @@ export function CommandPalette() {
     {
       id: "nav-projects",
       title: "Projects Hub",
-      subtitle: "TrustRAG, RAG-eval, SQL-UI, Face Detection",
+      subtitle: "RouteMind, TrustRAG, RAG-eval, SQL-UI",
       icon: Layers,
       action: () => {
         router.push("/#projects");

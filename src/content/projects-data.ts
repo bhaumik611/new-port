@@ -14,6 +14,25 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+    slug: "routemind",
+    title: "RouteMind",
+    tagline: "Adaptive LLM gateway with Bayesian contextual bandits & zero-cost multi-provider routing",
+    description:
+      "An enterprise-grade LLM routing gateway engineered with deterministic zero-cost enforcement (FREE_ONLY=true). Dynamically routes inference requests across free-tier providers (OpenRouter, Google Gemini, and local LLMs) using adaptive Bayesian contextual bandits, circuit breakers, and fallback cascades.",
+    category: "AI/ML Systems",
+    tags: ["Python", "FastAPI", "Bayesian Bandits", "LLM Gateway", "OpenRouter", "Google Gemini", "Circuit Breakers", "Prometheus"],
+    featured: true,
+    githubUrl: "https://github.com/bhaumik611/RouteMind",
+    liveUrl: "https://github.com/bhaumik611/RouteMind",
+    metrics: "Zero-cost optimization & sub-50ms routing",
+    highlights: [
+      "Multi-armed Bayesian contextual bandit routing optimizing across cost, latency, quality, and reliability",
+      "Deterministic zero-cost barrier filtering free-tier OpenRouter, Google Gemini, and local model providers",
+      "Resilient fallback cascading with stateful circuit breakers and exponential backoff retry mechanisms",
+      "Asynchronous high-throughput FastAPI gateway proxy with Prometheus observability and SSE token streaming"
+    ]
+  },
+  {
     slug: "trustrag",
     title: "TrustRAG",
     tagline: "Trust-aware RAG pipeline with hybrid retrieval & hallucination risk scoring",
