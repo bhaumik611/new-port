@@ -3,7 +3,7 @@ export interface Project {
   title: string;
   tagline: string;
   description: string;
-  category: "AI/ML Systems" | "Web & Cloud" | "NLP & LLMs" | "Computer Vision";
+  category: "AI/ML Systems" | "Web & Cloud" | "NLP & LLMs" | "Computer Vision" | "NLP & Applied AI Research";
   tags: string[];
   featured: boolean;
   githubUrl?: string;
@@ -155,6 +155,44 @@ export const projectsData: Project[] = [
       "Dual-stage pipeline switching between lightweight Haar and deep SSD based on scene complexity",
       "55% reduction in false positives in extreme lighting and low-contrast environments",
       "Real-time edge performance running smoothly at 25+ FPS on standard CPU hardware"
+    ]
+  },
+  {
+    slug: "newssumm-llm-finetuning-research",
+    title: "NewsSumm — LLM Fine-Tuning & Evaluation Pipeline",
+    tagline:
+      "Data-centric news summarization research with dataset auditing, leakage-aware splitting, and transformer-based experimentation",
+    description:
+      "A research pipeline for preparing and evaluating large-scale news article-summary datasets. The project investigates data quality, duplicate articles, suspicious records, and evaluation integrity before conducting extractive and abstractive summarization experiments using Lead-3, TextRank, and DistilBART.",
+    category: "NLP & Applied AI Research",
+    tags: [
+      "Python",
+      "Natural Language Processing",
+      "PyTorch",
+      "Hugging Face Transformers",
+      "DistilBART",
+      "News Summarization",
+      "Dataset Engineering",
+      "ROUGE",
+      "TextRank",
+      "Data Leakage Prevention"
+    ],
+    featured: true,
+    githubUrl:
+      "https://github.com/bhaumik611/newssum-data-LLM-finetune",
+    liveUrl:
+      "https://github.com/bhaumik611/newssum-data-LLM-finetune",
+    metrics:
+      "334K+ prepared records · Lead-3 baseline: ROUGE-1 F1 0.4710",
+    highlights: [
+      "Built a multi-stage dataset preparation and auditing workflow for a news article-summary corpus originally containing 348,766 rows.",
+      "Investigated missing values, inconsistent date formats, suspicious summaries, unusual article lengths, and article-summary alignment issues.",
+      "Performed duplicate auditing on normalized article text, identifying 307,622 unique normalized article texts and 16,373 duplicate groups in the recorded audit.",
+      "Created reproducible train, validation, and test partitions using seed 42, with article-group-aware splitting to reduce exact-duplicate leakage.",
+      "Established a Lead-3 extractive summarization baseline with reported ROUGE-1 F1 of 0.4710, ROUGE-2 F1 of 0.2623, and ROUGE-L F1 of 0.3430.",
+      "Implemented a bounded DistilBART fine-tuning experiment and evaluation scripts for investigating abstractive summarization.",
+      "Documented an important evaluation limitation: current abstractive evaluation scripts load the pretrained checkpoint rather than the saved fine-tuned artifact, so fine-tuned-model performance remains unverified.",
+      "Investigated extractive evaluation with TextRank; its current workflow has an unresolved NLTK punkt_tab tokenizer-resource issue."
     ]
   }
 ];

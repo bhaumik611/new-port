@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes = [
     "",
+    "/research",
     "/blog",
     "/resume",
   ].map((route) => ({
@@ -16,6 +17,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: route === "" ? 1.0 : 0.8,
+  }));
+
+  const researchRoutes = researchPapers.map((paper) => ({
+    url: `${siteUrl}/research/${paper.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
   }));
 
   const blogRoutes = blogPosts.map((post) => ({
@@ -39,5 +47,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...blogRoutes, ...simplifiedPaperRoutes, ...projectRoutes];
+  return [
+    ...staticRoutes,
+    ...researchRoutes,
+    ...blogRoutes,
+    ...simplifiedPaperRoutes,
+    ...projectRoutes,
+  ];
 }

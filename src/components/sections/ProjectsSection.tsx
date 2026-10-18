@@ -12,12 +12,23 @@ import { projectsData, Project } from "@/content/projects-data";
 export function ProjectsSection() {
   const [filter, setFilter] = useState<string>("All");
 
-  const categories = ["All", "AI/ML Systems", "Web & Cloud", "NLP & LLMs", "Computer Vision"];
+  const categories = [
+    "All",
+    "AI/ML Systems",
+    "NLP & LLMs",
+    "NLP & Applied AI Research",
+    "Web & Cloud",
+    "Computer Vision",
+  ];
 
   const filteredProjects =
     filter === "All"
       ? projectsData
-      : projectsData.filter((p) => p.category === filter);
+      : projectsData.filter(
+          (p) =>
+            p.category === filter ||
+            (filter === "NLP & LLMs" && p.category === "NLP & Applied AI Research")
+        );
 
   return (
     <section id="projects" className="py-24 px-4 sm:px-6 max-w-6xl mx-auto">

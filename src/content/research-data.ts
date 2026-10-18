@@ -362,5 +362,65 @@ export const researchPapers: ResearchPaper[] = [
       mla: `Patel, Bhaumik, and Yana Vaghani. "Semantic Utility-Aware Cognitive Orchestration for Hierarchical AI Inference in AI-RAN Enabled AI-Native 6G Networks." (2026).`,
       ieee: `B. Patel and Y. Vaghani, "Semantic Utility-Aware Cognitive Orchestration for Hierarchical AI Inference in AI-RAN Enabled AI-Native 6G Networks," 2026.`
     }
+  },
+
+  {
+    slug: "ai-multilanguage-vulnerability-detection-code-explanation-survey",
+    title:
+      "AI-Based Multi-Language Vulnerability Detection and Code Explanation System: A Survey",
+    shortTitle: "AI-Based Vulnerability Detection Survey",
+    authors: [
+      "Bhaumik Patel",
+      "Het Patel",
+      "Nishant Doshi"
+    ],
+    venue: "ICTCS Conference 2026",
+    date: "2026",
+    readTime: "8 min read",
+    category: "AI Security & Software Engineering",
+    tags: [
+      "AI Security",
+      "Large Language Models",
+      "Vulnerability Detection",
+      "Static Analysis",
+      "CodeBERT",
+      "GraphCodeBERT",
+      "Explainable AI",
+      "Software Security"
+    ],
+    publicationStatus: "accepted",
+    plainSummary:
+      "A survey examining the evolution of software vulnerability detection from traditional static analysis to classical machine learning, transformer-based code models, and large language models. The paper compares existing approaches, discusses their reported performance and limitations, and identifies open research challenges involving reliability, explainability, cross-language generalization, and secure integration into developer workflows.",
+    tldr:
+      "This survey investigates how static analysis, machine learning, code-focused transformers, and LLMs can support vulnerability detection, explanation, and repair. It highlights why hybrid approaches may be valuable while emphasizing that false positives, hallucinations, incomplete code context, data leakage, and inconsistent evaluation remain significant challenges.",
+    eli12:
+      "Imagine a software project as a huge building made of thousands of interconnected parts. A security scanner looks for known dangerous patterns, while an AI model learns from examples of vulnerable code. A large language model can also explain why a piece of code might be unsafe and suggest a fix. This survey compares these approaches, explains where each can fail, and explores how developers could combine them more reliably.",
+    problem:
+      "Modern software repositories frequently contain multiple programming languages and interconnected modules, making security analysis difficult. Traditional static analysis tools depend on rules, language support, and configuration, and may produce false positives or provide limited explanations. Machine learning and LLM-based approaches offer alternative ways to recognize vulnerability patterns and explain findings, but their reliability, generalization, and practical effectiveness remain important concerns.",
+    idea:
+      "The paper presents a structured survey of four major families of vulnerability detection methods: traditional static analysis, classical and graph-based machine learning, transformer-based code models, and LLM-based detection, explanation, and repair. It relates the reviewed literature to OWASP, MITRE CWE, and the NIST Secure Software Development Framework, while examining limitations and identifying directions for future research.",
+    howItWorks:
+      "1. Traditional static analysis examines source code using rules, program analysis, and data-flow or taint analysis without executing the application.\n\n2. Classical machine learning uses engineered code features, while graph-based models such as Devign represent structural relationships within programs.\n\n3. Transformer-based models such as CodeBERT, GraphCodeBERT, and VulBERTa learn representations of source code for vulnerability-related classification tasks.\n\n4. LLM-based approaches investigate vulnerability detection, classification, natural-language explanation, repair suggestions, and retrieval-augmented analysis.\n\n5. The survey compares the approaches using findings reported by prior studies, considering detection performance, language coverage, explainability, and practical limitations.\n\n6. The paper identifies research gaps involving hallucinations, incomplete program context, prompt injection, cross-language generalization, data quality, privacy, and evaluation methodology.",
+    keyResults:
+      "• Organizes the literature into four major categories: static analysis, classical and graph-based machine learning, transformer-based detection, and LLM-based detection and explanation.\n\n• Reviews CodeBERT, GraphCodeBERT, Devign, VulBERTa, and other representative approaches, alongside prompted LLMs and vulnerability-repair techniques.\n\n• Discusses reported benchmark results, including a 74.4% F1 score for CodeQL in a cited Java OWASP benchmark comparison and a reported F1 score of up to 84.97% for Devign on the Linux dataset.\n\n• Connects vulnerability detection research to OWASP Top 10, MITRE CWE, and NIST SSDF.\n\n• Identifies eight open challenges concerning explanation reliability, incomplete code context, adversarial inputs, cross-language generalization, dataset quality, false-positive/negative trade-offs, evaluation standardization, and data privacy.\n\nThese performance figures are reported by the cited studies reviewed in the survey; they are not original experimental results produced by this paper.",
+    whyItMatters:
+      "Reliable vulnerability detection requires more than identifying suspicious code. Developers also need actionable explanations, appropriate context, and confidence that suggested repairs address the underlying issue. This survey helps organize the research landscape and highlights why complementary analysis methods, rigorous evaluation, and explicit reliability safeguards matter when integrating AI into software security workflows.",
+    limitations:
+      "This work is a literature survey rather than an experimentally validated vulnerability detection system. Its comparisons depend on the datasets, benchmarks, metrics, and evaluation procedures reported in the reviewed studies. Results across different studies are not necessarily directly comparable. Important open challenges include hallucinated explanations, incomplete repository context, adversarial prompt injection, uneven performance across programming languages, dataset limitations, evaluation leakage, and privacy risks.",
+    paperUrl: "",
+    doi: "",
+    pdfUrl: "",
+    codeUrl: "",
+    citations: {
+      bibtex: `@inproceedings{patel2026aimultilanguage,
+  title={AI-Based Multi-Language Vulnerability Detection and Code Explanation System: A Survey},
+  author={Patel, Bhaumik and Patel, Het and Doshi, Nishant},
+  booktitle={ICTCS Conference 2026},
+  year={2026}
+}`,
+      apa: `Patel, B., Patel, H., & Doshi, N. (2026). AI-Based Multi-Language Vulnerability Detection and Code Explanation System: A Survey. ICTCS Conference 2026.`,
+      mla: `Patel, Bhaumik, Het Patel, and Nishant Doshi. "AI-Based Multi-Language Vulnerability Detection and Code Explanation System: A Survey." ICTCS Conference 2026 (2026).`,
+      ieee: `B. Patel, H. Patel, and N. Doshi, "AI-Based Multi-Language Vulnerability Detection and Code Explanation System: A Survey," in ICTCS Conference 2026, 2026.`
+    }
   }
 ];
